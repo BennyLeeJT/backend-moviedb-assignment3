@@ -1,0 +1,487 @@
+/*
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+*/
+
+/*--reset--*/
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+dl,
+dt,
+dd,
+ol,
+nav ul,
+nav li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+
+ol,
+ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/*--start editing from here--*/
+
+a {
+    text-decoration: none;
+}
+
+.txt-rt {
+    text-align: right;
+}
+
+/* text align right */
+
+.txt-lt {
+    text-align: left;
+}
+
+/* text align left */
+
+.txt-center {
+    text-align: center;
+}
+
+/* text align center */
+
+.float-rt {
+    float: right;
+}
+
+/* float right */
+
+.float-lt {
+    float: left;
+}
+
+/* float left */
+
+.clearfix {
+    clear: both;
+}
+
+/* clear float */
+
+.pos-relative {
+    position: relative;
+}
+
+/* Position Relative */
+
+.pos-absolute {
+    position: absolute;
+}
+
+/* Position Absolute */
+
+.vertical-base {
+    vertical-align: baseline;
+}
+
+/* vertical align baseline */
+
+.vertical-top {
+    vertical-align: top;
+}
+
+/* vertical align top */
+
+nav.vertical ul li {
+    display: block;
+}
+
+/* vertical menu */
+
+nav.horizontal ul li {
+    display: inline-block;
+}
+
+/* horizontal menu */
+
+img {
+    max-width: 100%;
+}
+
+/*--end reset--*/
+
+body a:hover {
+    text-decoration: none;
+}
+
+.clearfix {
+    clear: both;
+}
+
+/* content */
+
+body {
+    background: url(../images/banner.jpg) no-repeat center;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -ms-background-size: cover;
+    background-attachment: fixed;
+    font-family: 'PT Sans', sans-serif;
+}
+
+.text-center {
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.9em;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-shadow: 2px 3px 1px rgba(0, 0, 0, 0.57);
+    letter-spacing: 3px;
+    margin: 0.8em 1vw .9em;
+    font-family: 'PT Sans', sans-serif;
+}
+
+h2,
+h3 {
+    color: #e6aa3c;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.responsive_tabs.w3ls_tab {
+    max-width: 750px;
+    margin: 0 5vw;
+    background: rgba(0, 0, 0, 0.72);
+    padding: 3.5vw;
+    box-sizing: border-box;
+    display: flex;
+    display: -webkit-flex;
+    flex-wrap: wrap;
+}
+
+/*-- Pay-page --*/
+
+.tab-grid p {
+    color: #8B8B8B;
+    font-size: 0.95em;
+    line-height: 1.8em;
+    font-weight: 400;
+    margin: 10px 0;
+}
+
+.agile_pay input[type="email"],
+.agile_pay input[type="password"],
+.creditly-wrapper .form-control {
+    display: block;
+    width: 95.5%;
+    padding: 15px 10px;
+    height: auto;
+    font-size: 14px;
+    color: #212121;
+    background: #d4cacd;
+    border: 1px solid #e7e7e7;
+    margin-bottom: 25px;
+    outline: none;
+    font-family: 'PT Sans', sans-serif;
+}
+
+.agile_pay input[type="email"]:focus,
+.agile_pay input[type="password"]:focus,
+.creditly-wrapper .form-control:focus {
+    border-color: #66afe9;
+    outline: 0;
+}
+
+.agile_pay input[type="submit"] {
+    outline: none;
+    padding: 10px 20px;
+    background: #000;
+    font-size: 1em;
+    font-weight: 400;
+    color: #fff;
+    border: none;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -ms-transition: 0.5s all;
+}
+
+.agile_pay input[type="submit"]:hover {
+    background: #000;
+}
+
+.swit-radio label {
+    font-size: 15px;
+    color: #eee;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.radio_one:first-child {
+    margin-left: 0;
+    margin: 0;
+}
+
+.radio_one {
+    padding-left: 0;
+    line-height: 28px;
+    color: #404040;
+    cursor: pointer;
+}
+
+.radio_one {
+    position: relative;
+    display: inline-block;
+    margin-left: 15px;
+}
+
+.section_room_pay select {
+    padding: 6px 10px;
+    width: 100%;
+    border: none;
+    background: none;
+    border: 1px solid #E6E4E4;
+    color: #777;
+    outline: none;
+    font-size: 16px;
+    margin-bottom: 0;
+    background: #fff;
+    background-size: 4% !important;
+    -webkit-appearance: none;
+    font-family: 'PT Sans', sans-serif;
+}
+
+select.form-control.option-fieldf {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 0.8em;
+    margin: 0.5em 0;
+    outline: none;
+    color: #212121;
+    border: none;
+    border: 1px solid #ccc;
+    letter-spacing: 1px;
+    text-align: left;
+    font-family: 'PT Sans', sans-serif;
+}
+
+.checkout-right-basket span {
+    margin-left: 1em;
+}
+
+.check_box_one {
+    margin-bottom: 10px;
+}
+
+.form-control {
+    border-radius: 0;
+}
+
+.btn-primary {
+    color: #000;
+    background-color: #e6aa3c;
+    border-color: #e6aa3c;
+    padding: 5px 10px;
+}
+
+button.submit.check_out {
+    outline: none;
+    padding: 10px 28px;
+    background: #34c663;
+    font-size: 1.1em;
+    border-radius: 7px;
+    font-weight: 400;
+    color: #fff;
+    border: none;
+    text-transform: capitalize;
+    letter-spacing: 2px;
+    margin-top: 1em;
+    font-family: 'PT Sans', sans-serif;
+}
+
+button.submit.check_out:hover {
+    background: #e85342;
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -ms-transition: 0.5s all;
+}
+
+.section_room_pay {
+    margin-bottom: 2em;
+}
+
+.copy-wthree {
+    margin: 3em 0em;
+}
+
+.copy-wthree p {
+    color: #fff;
+    font-size: 15px;
+    letter-spacing: 1px;
+}
+
+.copy-wthree a {
+    color: #fff;
+}
+
+.paypal_agile {
+    margin-top: 1.5em;
+}
+
+@media (max-width: 1920px) {
+    h1 {
+        font-size: 3.3vw;
+    }
+}
+
+@media (max-width: 1024px) {
+    h1 {
+        font-size: 4.3vw;
+    }
+}
+
+@media (max-width:736px) {
+    h1 {
+        font-size: 5.2vw;
+    }
+}
+
+@media (max-width: 480px) {
+    .copy-wthree p {
+        line-height: 1.7;
+    }
+    .copy-wthree {
+        margin: 2em 0;
+    }
+    h1 {
+        font-size: 6.5vw;
+    }
+}
+
+@media (max-width: 384px) {
+    .agile_pay input[type="email"],
+    .agile_pay input[type="password"],
+    .creditly-wrapper .form-control {
+        width: 93%;
+        padding: 10px 10px;
+    }
+}

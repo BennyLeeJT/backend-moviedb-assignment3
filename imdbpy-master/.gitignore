@@ -1,0 +1,16 @@
+*.pyc
+*.pyo
+*.egg-info
+*.mo
+*.so
+.pytest_cache/
+build/
+_build/
+__pycache__
+dist/
+.idea
+.vscode
+.cache
+.tox
+.coverage
+prof
