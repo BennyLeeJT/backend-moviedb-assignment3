@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #todo-list li {
+            display:flex;
+        }
+        
+        #todo-list li div {
+            margin : 0.5em;
+        }
+        div {
+            margin : 20px;
+        }
+        
+        p 
+        {
+            margin : 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>All Movies in the Database</h1>
+    <ul id=''>
+    {% for i in all_movies_jinja %}
+    <li>
+        <div style='container'>
+            <p>Movie Title : {{i.title}} <a href="/edit/{{i.todo_id}}">[Edit]</a></p>
+        <!--</div>-->
+        <!--<div>-->
+            <p>Genre : {{i.genre}}</p>
+        <!--</div>-->
+        <!--<div>-->
+            <p>Year : {{i.year}}</p>
+        <!--</div>-->
+        <!--<div>-->
+            <p>Review Rating : {{i.reviewrating}}</p>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+</body>
+</html>

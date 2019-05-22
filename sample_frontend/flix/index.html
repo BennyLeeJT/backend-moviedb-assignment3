@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<!--WITH PICS-->
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -30,6 +30,14 @@
 	<meta name="description" content="">
 	<meta name="keywords" content="">
 	<meta name="author" content="Dmitry Volkov">
+	
+	<style>
+		.formtext 
+		{
+			color : white;
+		}
+	</style>
+	
 	<title>FlixGo – Online Movies, TV Shows & Cinema HTML Template</title>
 
 </head>
@@ -159,72 +167,78 @@
 
 
     <form method='POST'>
-        <div class="formtext" style="color:white">
+        <div class="formtext">
             <label>Name of movie title:</label>
-            <input type='text' name='movie-input-name'></input>
+            <input type='text' name='input_name_title'></input>
         </div>
         
-        <div class="formtext" style="color:white">
+        <div class="formtext">
             <label>description info of movie</label>
-            <textarea name='movie-textarea-desc'></textarea>
+            <textarea name='input_name_info'></textarea>
         </div>
         
-        <div class="formtext" style="color:white">
-            <label>Genre</label>
-            <select name='movie-genre-select-name'>
-                {% for i in all_genres %}
-                <option value='{{i.id}}'>{{i.genre}}</option>
-                {% endfor %}
-            </select>
-        </div>
-        
-        <div class="formtext" style="color:white">
+        <div class="formtext">
             <label>Censor rating</label>
-            <select name='movie-censor-select-name'>
+            <select name='input_name_censorrating'>
                 {% for i in all_censors %}
                 <option value='{{i.id}}'>{{i.censor}}</option>
                 {% endfor %}
             </select>
         </div>
+
+        <div class="formtext">
+            <label>Runtime (in mins):</label>
+            <input type='number' name='input_name_runtime'></input>
+        </div>
         
-        <div class="formtext" style="color:white">
+        <div class="formtext">
+            <label>Review Rating:</label>
+            <input type='number' name='input_name_reviewrating' step="0.1"></input>
+        </div>
+        
+        <div class="formtext">
+            <label>Year of Release</label>
+            <input type='number' name='input_name_year'></input>
+        </div>
+        
+
+
+
+
+        <div class="formtext">
+            <label>Genre</label>
+            <select name='input_name_genre'>
+                {% for i in all_genres %}
+                <option value='{{i.id}}'>{{i.genre}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formtext">
             <label>languages</label>
-            <select name='movie-languages-select'>
-                {% for i in all_languages %}
+            <select name='input_name_language'>
+                {% for i in all_languages_jinja %}
                 <option value='{{i.id}}'>{{i.language}}</option>
                 {% endfor %}
             </select>
         </div>
         
-        <div class="formtext" style="color:white">
+        <div class="formtext">
             <label>Actors:</label>
-            <input type='text' name='movie-actor-input-name'></input>
+            <input type='text' name='input_name_actor'></input>
         </div>
         
-        <div class="formtext" style="color:white">
+        <div class="formtext">
             <label>Character Roles (in mins):</label>
-            <input type='text' name='movie-character-input-name'></input>
+            <input type='text' name='input_name_character'></input>
         </div>
         
-        <div class="formtext" style="color:white">
+        <div class="formtext">
             <label>Production Company:</label>
-            <input type='text' name='movie-productioncompany-input-name'></input>
+            <input type='text' name='input_name_productioncompany'></input>
         </div>
         
-        <div class="formtext" style="color:white">
-            <label>Runtime (in mins):</label>
-            <input type='number' name='movie-runtime-input-name'></input>
-        </div>
         
-        <div class="formtext" style="color:white">
-            <label>Review Rating:</label>
-            <input type='number' name='movie-review-input-name'></input>
-        </div>
-        
-        <div class="formtext" style="color:white">
-            <label>Year of Release</label>
-            <input type='number' name='movie-year-input-name'></input>
-        </div>
         
         
         <input type='submit'>
@@ -355,6 +369,12 @@
 </ul>
 <br>
 {% endfor %}
+
+
+
+
+
+<!--BREAK HERE######################################################-->
 
 
 
