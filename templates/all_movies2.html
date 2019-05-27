@@ -16,7 +16,7 @@
     <title>Movies DB</title>
   </head>
   <body>
-    <h3>All Movies in the Database</h3>
+    <h3>Search Results</h3>
 
 <!--<div class="tableFixHead">-->
     <table class="table" id="tableFixHead">
@@ -43,7 +43,7 @@
   </thead>
   <tbody>
     <tr>
-    {% for i in all_movies_jinja %}
+    {% for i in movies_dict_jinja %}
       <th scope="row">{{ loop.index }}</th>
       <td>{{ i.id }}</td>
       <td>{{ i.title }}</td>

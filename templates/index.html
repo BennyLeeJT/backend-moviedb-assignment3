@@ -127,12 +127,12 @@
 		</div>
 
 		<!-- header search -->
-		<form action="#" class="header__search">
+		<form method="GET" action="#" class="header__search">
 			<div class="container">
 				<div class="row">
 					<div class="col-12">
 						<div class="header__search-content">
-							<input type="text" placeholder="Search for a movie, TV Series that you are looking for">
+							<input type="text" placeholder="Search for a movie that you are looking for" name="search_input_name">
 
 							<button type="button">search</button>
 						</div>
@@ -155,13 +155,13 @@
 		</div>
 		<!-- end home bg -->
 
-<div class="container"></div>
+<div class="container">WHERE2</div>
 
 <h1>ADD MOVIES HERE</h1>
 
     <form method='POST'>
         <div class="formtext">
-            <label>Name of movie title:</label>
+            <label>Movie Title:</label>
             <input type='text' name='input_name_title'></input>
         </div>
         
@@ -222,7 +222,7 @@
         </div>
         
         <div class="formtext">
-            <label>Character Roles (in mins):</label>
+            <label>Character Roles:</label>
             <input type='text' name='input_name_character'></input>
         </div>
         
@@ -238,12 +238,13 @@
     </form>
 
 
+<div>HELLO WHERE BELOW DOESN'T APPEAR??</div>
 <div>
 <ul id='todo-list'>
     {% for i in all_movies_jinja %}
     <li>
         <div style='width:200px'>
-            {{i.todo_name}} <a href="/edit/{{each_todo.todo_id}}">[Edit]</a>
+            {{i.todo_name}} <a href="/edit/{{each_todo.todo_id}}">WHERE AM I[Edit]</a>
         </div>
         <div>
             {{i.category_name}}
@@ -253,7 +254,15 @@
 </ul>
 </div>
 
-
+<div class='container'>
+        <form method='get' class='form  mb-2'>
+            <div class='form-group'>
+                <label>Search</label>
+                <input type='text' class='form-control' name='search' />
+            </div>
+            <input type='submit' class='btn btn-primary'/>
+        </form>
+</div>
 
 
 {% for i in all_movies_jinja %}

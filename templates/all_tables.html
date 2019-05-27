@@ -8,18 +8,13 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <style type="text/css">
-      #tableFixHead    { overflow-y: auto; height: 100%; }
-      #tableFixHead th { position: sticky; top: 0; }
-    </style>
-    
     <title>Movies DB</title>
   </head>
   <body>
-    <h3>All Movies in the Database</h3>
+    <h1>All Tables in the Database</h1>
 
-<!--<div class="tableFixHead">-->
-    <table class="table" id="tableFixHead">
+
+    <table class="table">
   <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
@@ -29,18 +24,15 @@
       <th scope="col">Genre</th>
       <th scope="col">Year</th>
       <th scope="col">Review Rating</th>
-      <th scope="col">Language</th>
       <th scope="col">Info</th>
       <th scope="col">Actor Id</th>
       <th scope="col">Actor Name</th>
       <th scope="col">Character Name</th>
       <th scope="col">Runtime</th>
       <th scope="col">Censor Rating</th>
-      <th scope="col">Production Company</th>
-
-      
     </tr>
   </thead>
+  
   <tbody>
     <tr>
     {% for i in all_movies_jinja %}
@@ -51,19 +43,17 @@
       <td>{{ i.genre }}</td>
       <td>{{ i.year }}</td>
       <td>{{ i.reviewrating }}</td>
-      <td>{{ i.language }}</td>
       <td>{{ i.info }}</td>
       <td>{{ i["actor.id"] }}</td>
       <td>{{ i.name }}</td>
       <td>{{ i["character.name"] }}</td>
       <td>{{ i.runtime }}</td>
       <td>{{ i["censorrating.censorrating"] }}</td>
-      <td>{{ i["productioncompany.name"] }}</td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
-<!--</div>-->
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
