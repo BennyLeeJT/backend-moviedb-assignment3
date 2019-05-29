@@ -1,148 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<!--SKELETON ONLY-->
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% extends "layout_index.html" %}
 
-	<!-- Font -->
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600%7CUbuntu:300,400,500,700" rel="stylesheet">
-
-	<!-- CSS -->
-	<link rel="stylesheet" href="css/bootstrap-reboot.min.css">
-	<link rel="stylesheet" href="css/bootstrap-grid.min.css">
-	<link rel="stylesheet" href="css/owl.carousel.min.css">
-	<link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
-	<link rel="stylesheet" href="css/nouislider.min.css">
-	<link rel="stylesheet" href="css/ionicons.min.css">
-	<link rel="stylesheet" href="css/plyr.css">
-	<link rel="stylesheet" href="css/photoswipe.css">
-	<link rel="stylesheet" href="css/default-skin.css">
-	<link rel="stylesheet" href="css/main.css">
-
-	<!-- Favicons -->
-	<link rel="icon" type="image/png" href="icon/favicon-32x32.png" sizes="32x32">
-	<link rel="apple-touch-icon" href="icon/favicon-32x32.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="icon/apple-touch-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="icon/apple-touch-icon-114x114.png">
-	<link rel="apple-touch-icon" sizes="144x144" href="icon/apple-touch-icon-144x144.png">
-
-	<meta name="description" content="">
-	<meta name="keywords" content="">
-	<meta name="author" content="Dmitry Volkov">
+{% block content %}
 	
-
-	
-	<title>FlixGo – Online Movies, TV Shows & Cinema HTML Template</title>
-
-</head>
-<body class="body">
-	
-	<!-- header -->
-	<header class="header">
-		<div class="header__wrap">
-			<div class="container">
-				<div class="row">
-					<div class="col-12">
-						<div class="header__content">
-							<!-- header logo -->
-							<a href="index.html" class="header__logo">
-								<img src="img/logo.svg" alt="">
-							</a>
-							<!-- end header logo -->
-
-							<!-- header nav -->
-							<ul class="header__nav">
-								<!-- dropdown -->
-								<li class="header__nav-item">
-									<a class="dropdown-toggle header__nav-link" href="#" role="button" id="dropdownMenuHome" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Home</a>
-
-									<ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuHome">
-										<li><a href="index.html">Home slideshow bg</a></li>
-										<li><a href="index2.html">Home static bg</a></li>
-									</ul>
-								</li>
-								<!-- end dropdown -->
-
-								<!-- dropdown -->
-								<li class="header__nav-item">
-									<a class="dropdown-toggle header__nav-link" href="#" role="button" id="dropdownMenuCatalog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catalog</a>
-
-									<ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuCatalog">
-										<li><a href="catalog1.html">Catalog Grid</a></li>
-										<li><a href="catalog2.html">Catalog List</a></li>
-										<li><a href="details1.html">Details Movie</a></li>
-										<li><a href="details2.html">Details TV Series</a></li>
-									</ul>
-								</li>
-								<!-- end dropdown -->
-
-								<li class="header__nav-item">
-									<a href="pricing.html" class="header__nav-link">Pricing Plan</a>
-								</li>
-
-								<li class="header__nav-item">
-									<a href="faq.html" class="header__nav-link">Help</a>
-								</li>
-
-								<!-- dropdown -->
-								<li class="dropdown header__nav-item">
-									<a class="dropdown-toggle header__nav-link header__nav-link--more" href="#" role="button" id="dropdownMenuMore" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon ion-ios-more"></i></a>
-
-									<ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuMore">
-										<li><a href="about.html">About</a></li>
-										<li><a href="signin.html">Sign In</a></li>
-										<li><a href="signup.html">Sign Up</a></li>
-										<li><a href="404.html">404 Page</a></li>
-									</ul>
-								</li>
-								<!-- end dropdown -->
-							</ul>
-							<!-- end header nav -->
-
-							<!-- header auth -->
-							<div class="header__auth">
-								<button class="header__search-btn" type="button">
-									<i class="icon ion-ios-search"></i>
-								</button>
-
-								<a href="signin.html" class="header__sign-in">
-									<i class="icon ion-ios-log-in"></i>
-									<span>sign in</span>
-								</a>
-							</div>
-							<!-- end header auth -->
-
-							<!-- header menu btn -->
-							<button class="header__btn" type="button">
-								<span></span>
-								<span></span>
-								<span></span>
-							</button>
-							<!-- end header menu btn -->
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- header search -->
-		<form method="GET" action="#" class="header__search">
-			<div class="container">
-				<div class="row">
-					<div class="col-12">
-						<div class="header__search-content">
-							<input type="text" placeholder="Search for a movie that you are looking for" name="search_input_name">
-
-							<button type="button">search</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</form>
-		<!-- end header search -->
-	</header>
-	<!-- end header -->
 
 	<!-- home -->
 	<section class="home">
@@ -155,23 +14,22 @@
 		</div>
 		<!-- end home bg -->
 
-<div class="container">WHERE2</div>
-
+<div class="container">
 <h1>ADD MOVIES HERE</h1>
 
     <form method='POST'>
         <div class="formtext">
-            <label>Movie Title:</label>
+            <label>Movie Title : </label>
             <input type='text' name='input_name_title'></input>
         </div>
         
         <div class="formtext">
-            <label>Description info of movie</label>
-            <textarea name='input_name_info'></textarea>
+            <label>Description info of movie : </label>
+            <textarea name='input_name_info'  rows="8" cols="50"></textarea>
         </div>
         
         <div class="formtext">
-            <label>Censor Rating</label>
+            <label>Censor Rating : </label>
             <select name='input_name_censorrating'>
                 {% for i in all_censorratings_jinja %}
                 <option value='{{i.id}}'>{{i.censorrating}}</option>
@@ -180,17 +38,17 @@
         </div>
 
         <div class="formtext">
-            <label>Runtime (in mins):</label>
+            <label>Runtime (in mins) : </label>
             <input type='number' name='input_name_runtime' min="0"></input>
         </div>
         
         <div class="formtext">
-            <label>Review Rating:</label>
+            <label>Review Rating : </label>
             <input type='number' name='input_name_reviewrating' step="0.1" min="0" max="10"></input>
         </div>
         
         <div class="formtext">
-            <label>Year of Release</label>
+            <label>Year of Release : </label>
             <input type='number' name='input_name_year' min="1800" max=2030 id="input_id_year"></input>
         </div>
         
@@ -199,7 +57,7 @@
 
 
         <div class="formtext">
-            <label>Genre</label>
+            <label>Genre : </label>
             <select name='input_name_genre'>
                 {% for i in all_genres_jinja %}
                 <option value='{{i.id}}'>{{i.genre}}</option>
@@ -208,7 +66,7 @@
         </div>
 
         <div class="formtext">
-            <label>Languages</label>
+            <label>Languages : </label>
             <select name='input_name_language'>
                 {% for i in all_languages_jinja %}
                 <option value='{{i.id}}'>{{i.language}}</option>
@@ -217,17 +75,17 @@
         </div>
         
         <div class="formtext">
-            <label>Actors:</label>
+            <label>Actors : </label>
             <input type='text' name='input_name_actor'></input>
         </div>
         
         <div class="formtext">
-            <label>Character Roles:</label>
+            <label>Character Roles : </label>
             <input type='text' name='input_name_character'></input>
         </div>
         
         <div class="formtext">
-            <label>Production Company:</label>
+            <label>Production Company : </label>
             <input type='text' name='input_name_productioncompany'></input>
         </div>
         
@@ -236,245 +94,7 @@
         
         <input type='submit'>
     </form>
-
-
-<div>HELLO WHERE BELOW DOESN'T APPEAR??</div>
-<div class="container">
-<ul id='todo-list'>
-    {% for i in all_movies_jinja %}
-    <li>
-        <div style='width:200px'>
-            {{i.todo_name}} <a href="/edit/{{each_todo.todo_id}}">WHERE AM I[Edit]</a>
-        </div>
-        ??????????????ASDASDASASDDAS
-        <div>
-            {{i.category_name}}
-        </div>
-    </li>
-    {% endfor %}
-</ul>
-</div>
-
-<div class='container'>
-        <form method='get' class='form  mb-2'>
-            <div class='form-group'>
-                <label>Search</label>
-                <input type='text' class='form-control' name='search' />
-            </div>
-            <input type='submit' class='btn btn-primary'/>
-        </form>
 </div>
 
 
-{% for i in all_movies_jinja %}
-<ul class="formtext">
-    <li>
-        Movie Title
-        <ul>
-            <li>
-                {{ i.title }} <!-- same as {{ i["name"] }} depends if ..... -->
-            </li>
-        </ul>
-    </li>
-
-    <li>
-        Movie id
-        <ul>
-            <li>
-                {{ i["id"] }}
-            </li>
-        </ul>
-    </li>
-    
-    <li>
-        Genre
-        <ul>
-            <li>
-                {{ i.genre }}
-            </li>
-        </ul>
-    </li>
-    
-    <li>
-        Genre id
-        <ul>
-            <li>
-                {{ i["genre_id"] }}
-            </li>
-        </ul>
-    </li>
-    
-    <li>
-        Description
-        <ul>
-            <li>
-                {{ i["description_id"] }}
-            </li>
-        </ul>
-    </li>
-    
-    <li>
-        Censor Rating
-        <ul>
-            <li>
-                {{ i["censor_rating_id"] }}
-            </li>
-        </ul>
-    </li>
-    
-    <li>
-        Languages
-        <ul>
-            <li>
-                {{ i["languages_id"] }}
-            </li>
-        </ul>
-    </li>
-    
-    <li>
-        Year of release
-        <ul>
-            <li>
-                {{ i["year_id"] }}
-            </li>
-        </ul>
-    </li>
-    
-    <li>
-        Actors
-        <ul>
-            <li>
-                {{ i["actors_id"] }}
-            </li>
-        </ul>
-    </li>
-    
-    <li>
-        Characters
-        <ul>
-            <li>
-                {{ i["character_id"] }}
-            </li>
-        </ul>
-    </li>
-    
-    <li>
-        Run Time (in mins)
-        <ul>
-            <li>
-                {{ i["run_time_id"] }}
-            </li>
-        </ul>
-    </li>
-    
-    <li>
-        Review Rating
-        <ul>
-            <li>
-                {{ i["review_id"] }}
-            </li>
-        </ul>
-    </li>
-    
-    <li>
-        Production Companies
-        <ul>
-            <li>
-                {{ i["productioncompany_id"] }}
-            </li>
-        </ul>
-    </li>
-    
-    
-</ul>
-<br>
-{% endfor %}
-
-
-
-
-	<!-- footer -->
-	<footer class="footer">
-		<div class="container">
-			<div class="row">
-				<!-- footer list -->
-				<div class="col-12 col-md-3">
-					<h6 class="footer__title">Download Our App</h6>
-					<ul class="footer__app">
-						<li><a href="#"><img src="img/Download_on_the_App_Store_Badge.svg" alt=""></a></li>
-						<li><a href="#"><img src="img/google-play-badge.png" alt=""></a></li>
-					</ul>
-				</div>
-				<!-- end footer list -->
-
-				<!-- footer list -->
-				<div class="col-6 col-sm-4 col-md-3">
-					<h6 class="footer__title">Resources</h6>
-					<ul class="footer__list">
-						<li><a href="#">About Us</a></li>
-						<li><a href="#">Pricing Plan</a></li>
-						<li><a href="#">Help</a></li>
-					</ul>
-				</div>
-				<!-- end footer list -->
-
-				<!-- footer list -->
-				<div class="col-6 col-sm-4 col-md-3">
-					<h6 class="footer__title">Legal</h6>
-					<ul class="footer__list">
-						<li><a href="#">Terms of Use</a></li>
-						<li><a href="#">Privacy Policy</a></li>
-						<li><a href="#">Security</a></li>
-					</ul>
-				</div>
-				<!-- end footer list -->
-
-				<!-- footer list -->
-				<div class="col-12 col-sm-4 col-md-3">
-					<h6 class="footer__title">Contact</h6>
-					<ul class="footer__list">
-						<li><a href="tel:+18002345678">+1 (800) 234-5678</a></li>
-						<li><a href="mailto:support@moviego.com">support@flixgo.com</a></li>
-					</ul>
-					<ul class="footer__social">
-						<li class="facebook"><a href="#"><i class="icon ion-logo-facebook"></i></a></li>
-						<li class="instagram"><a href="#"><i class="icon ion-logo-instagram"></i></a></li>
-						<li class="twitter"><a href="#"><i class="icon ion-logo-twitter"></i></a></li>
-						<li class="vk"><a href="#"><i class="icon ion-logo-vk"></i></a></li>
-					</ul>
-				</div>
-				<!-- end footer list -->
-
-				<!-- footer copyright -->
-				<div class="col-12">
-					<div class="footer__copyright">
-						<small><a href="https://templatespoint.net" target="_blank">TemplatesPoint</a></small>
-
-						<ul>
-							<li><a href="#">Terms of Use</a></li>
-							<li><a href="#">Privacy Policy</a></li>
-						</ul>
-					</div>
-				</div>
-				<!-- end footer copyright -->
-			</div>
-		</div>
-	</footer>
-	<!-- end footer -->
-
-	<!-- JS -->
-	<script src="js/jquery-3.3.1.min.js"></script>
-	<script src="js/bootstrap.bundle.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/jquery.mousewheel.min.js"></script>
-	<script src="js/jquery.mCustomScrollbar.min.js"></script>
-	<script src="js/wNumb.js"></script>
-	<script src="js/nouislider.min.js"></script>
-	<script src="js/plyr.min.js"></script>
-	<script src="js/jquery.morelines.min.js"></script>
-	<script src="js/photoswipe.min.js"></script>
-	<script src="js/photoswipe-ui-default.min.js"></script>
-	<script src="js/main.js"></script>
-</body>
-
-</html>
+{% endblock %}

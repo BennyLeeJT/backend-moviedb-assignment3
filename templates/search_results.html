@@ -1,7 +1,7 @@
 {% extends "layout_search_results.html" %}
 
 {% block content %}
-    <h3  style="color: white">All Movies in the Database</h3>
+    <h3>SEARCH RESULTS</h3>
 
 <!--<div class="tableFixHead">-->
     <table class="table" id="tableFixHead">
@@ -48,43 +48,47 @@
     {% endfor %}
   </tbody>
 </table>
+{% endblock %}
+<!--<table class='table'>-->
+<!--            <tr>-->
+<!--                <th>-->
+<!--                    Employee Number-->
+<!--                </th>-->
+<!--                <th>-->
+<!--                    First Name-->
+<!--                </th>-->
+<!--                <th>-->
+<!--                    Last Name-->
+<!--                </th>-->
+<!--                <th>-->
+<!--                    Email-->
+<!--                </th>-->
+<!--                <th>-->
+<!--                    Job Title-->
+<!--                </th>-->
+<!--            </tr>-->
+<!--            {% for e in movies_jinja %}-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    {{ e['id'] }}-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    {{ e['title'] }}-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    {{ e['year'] }}-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    {{ e['runtime'] }}-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    {{ e['censorrating'] }}-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            {% endfor %}-->
+<!--        </table>-->
+        
+        
+        
 <!--</div>-->
 
-
-{% endblock %}
-
-
-
-
-<!--PREVIOUS USE OF LIST TO SHOW DB-->
-
-<!--    <ol id=''>-->
-<!--    {% for i in all_movies_jinja %}-->
-<!--    <li>-->
-<!--        <div style='container'>-->
-<!--            <p>Movie Id : {{ i.id }}</p>-->
-            
-<!--            <p>Movie Title : {{ i.title }} <a href="/edit/{{i.todo_id}}">[Edit]</a></p>-->
-            
-<!--            <p>Genre Id : {{ i["genre.id"] }}</p>-->
-<!--            <p>Genre : {{ i.genre }}</p>-->
-
-<!--            <p>Year : {{ i.year }}</p>-->
-
-<!--            <p>Review Rating : {{ i.reviewrating }}</p>-->
-            
-<!--            <p>Info : {{ i.info }}</p>-->
-            
-<!--            <p>Actor Id : {{ i["actor.id"] }}</p>-->
-<!--            <p>Actor Name : {{ i.name }}</p>-->
-
-<!--            <p>Character Name : {{ i["character.name"] }}</p>-->
-            
-<!--            <p>Runtime : {{ i.runtime }} minutes</p>-->
-
-<!--            <p>Censor Rating : {{ i["censorrating.censorrating"] }}</p>-->
-            
-<!--        </div>-->
-<!--    </li>-->
-<!--    {% endfor %}-->
-<!--</ol>-->

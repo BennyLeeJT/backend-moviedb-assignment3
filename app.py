@@ -11,183 +11,75 @@ connection123 = pymysql.connect(host="localhost",
                             user="roczi",
                             password="",
                             db=("moviesdb"))
-                            
-      
+                        
 import os
 app = Flask(__name__)
 
 cursor = pymysql.cursors.DictCursor(connection123)
 
-# @app.route("/test")
-# def test():
-#     print("request.form = ", request.form)
-#     print("request.args = ", request.args)
-#     return "finished tests"
+@app.route('/test')
+def test():
+    return render_template('test.html')
     
-@app.route("/movies")
-
-        # sql_list = 
+@app.route('/')
+def home():
+    print("request.args = ", request.args)
+    
+    if 'search_input_name' not in request.args:
+        print("IF CONDITION")
+        return render_template("index.html")
+    else:
+        search_for = "%" + request.args['search_input_name'] + "%"
+        print("ELSE CONDITION : search_for = ", search_for)
         
-            
-    
-    
-        # searh_query_var = request.form["search_input_name"]
-        # print("searh_query_var = ", searh_query_var)
-        # sql_input = ("%"+search_query_var+"%")
+        sql_query_all_tables_joined = """
+        SELECT * 
+        FROM movie
         
-        # cursor.execute(sql_search, sql_input)
-        # movies_var = cursor.fetchall()
-        # print("movies_var = ", movies_var)
-        # return render_template('all_movies2.html', 
-        # movies_dict_jinja = movies_var)
+        LEFT JOIN `movie_actor` ON `movie`.`id` = `movie_actor`.`movie_id`
+        LEFT JOIN `actor` ON `actor`.`id` = `movie_actor`.`actor_id`
         
+        LEFT JOIN `movie_character` ON `movie`.`id` = `movie_character`.`movie_id` 
+        LEFT JOIN `character` ON `character`.`id` = `movie_character`.`character_id`
         
+        LEFT JOIN `movie_genre` ON `movie`.`id` = `movie_genre`.`movie_id`
+        LEFT JOIN `genre` ON `genre`.`id` = `movie_genre`.`genre_id`
         
-    # search_results_var = """
-    # SELECT * 
-    # FROM movie
-    
-    # LEFT JOIN `movie_actor` ON `movie`.`id` = `movie_actor`.`movie_id`
-    # LEFT JOIN `actor` ON `actor`.`id` = `movie_actor`.`actor_id`
-    
-    # LEFT JOIN `movie_character` ON `movie`.`id` = `movie_character`.`movie_id` 
-    # LEFT JOIN `character` ON `character`.`id` = `movie_character`.`character_id`
-    
-    # LEFT JOIN `movie_genre` ON `movie`.`id` = `movie_genre`.`movie_id`
-    # LEFT JOIN `genre` ON `genre`.`id` = `movie_genre`.`genre_id`
-    
-    # LEFT JOIN `movie_language` ON `movie`.`id` = `movie_language`.`movie_id`
-    # LEFT JOIN `language` ON `language`.`id` = `movie_language`.`language_id`
-    
-    # LEFT JOIN `movie_productioncompany` ON `movie`.`id` = `movie_productioncompany`.`movie_id`
-    # LEFT JOIN `productioncompany` ON `productioncompany`.`id` = `movie_productioncompany`.`productioncompany_id`
-    
-    # LEFT JOIN `censorrating` ON `movie`.`censorrating` = `censorrating`.`id`
-    
-    # LEFT JOIN `reviewrating` ON `movie`.`reviewrating` = `reviewrating`.`id`
-
-    # LEFT JOIN `year` ON `movie`.`year` = `year`.`id`
-
-    # """
-    
-    
-
-
-
-
-    # else:
-    #     sql_ = join_everything_var
-    # else:
+        LEFT JOIN `movie_language` ON `movie`.`id` = `movie_language`.`movie_id`
+        LEFT JOIN `language` ON `language`.`id` = `movie_language`.`language_id`
         
-    #     print("searh_query_var = ", searh_query_var)
-    # cursor.execute(sql)
-    # cursor.execute(sql)
-
-    # movies_var = cursor.fetchall()
-    # # print("movies_var = ", movies_var)
-    # return render_template('all_movies2.html', 
-    # movies_dict_jinja = movies_var)
+        LEFT JOIN `movie_productioncompany` ON `movie`.`id` = `movie_productioncompany`.`movie_id`
+        LEFT JOIN `productioncompany` ON `productioncompany`.`id` = `movie_productioncompany`.`productioncompany_id`
+        
+        LEFT JOIN `censorrating` ON `movie`.`censorrating` = `censorrating`.`id`
+        
+        LEFT JOIN `reviewrating` ON `movie`.`reviewrating` = `reviewrating`.`id`
     
-    # movies_var = cursor.fetchall()
-    # print("movies_var = ", movies_var)
+        LEFT JOIN `year` ON `movie`.`year` = `year`.`id`
     
-    # return render_template("all_movies.html", all_movies_jinja = movies_var)
-
-
-# f_arg = ('yasoob', 'python', 'eggs', 'test')
-# @app.route('/arg')
-# def test_var_args(f_arg, *argv):
-#     print("first normal arg:", f_arg)
-#     for i in argv:
-#         print("another arg through *argv:", arg)
-    # return "HAHAHA"
-
-
-        
-        
-
-@app.route('/', methods=['GET', 'POST'])
-def search():
-    print("request.args1 = ", request.args)
-    if "search_input_name" in request.args:
-        #     print("request.form = ", request.form)
-        print("request.args2 = ", request.args)
-        sql_search1 = """
-        SELECT * from movie 
-        WHERE `movie.title` LIKE %s OR 
-        `movie.year` LIKE %s
-        """
-        # sql_search1 = """
-        # SELECT * from movie 
-        # WHERE year LIKE %s
-        # """
-        
-        sql_search2 = """
-        SELECT * from genre 
-        WHERE `genre.genre` LIKE %s
-        """
-
-        
-        sql_search3 = """
-        SELECT * from language 
-        WHERE `language.language` LIKE %s
+        WHERE 
+        `title` LIKE %s OR
+        `year` LIKE %s OR
+        `genre` LIKE %s OR
+        `language` LIKE %s OR
+        `actor`.`name` LIKE %s OR
+        `character`.name LIKE %s OR
+        `productioncompany`.`name` LIKE %s OR
+        `censorrating`.`censorrating` LIKE %s OR
+        `year`.`id` LIKE %s
         """
         
-        sql_search4 = """
-        SELECT * from actor 
-        WHERE `actor.name` LIKE %s
-        """
-        
-        sql_search5 = """
-        SELECT * from character 
-        WHERE `character.name` LIKE %s
-        """
-        
-        sql_search6 = """
-        SELECT * from productioncompany 
-        WHERE `productioncompany.name` LIKE '%s
-        """
+        # print("sql_query_all_tables_joined = ", sql_query_all_tables_joined)
+        cursor = pymysql.cursors.DictCursor(connection123)
+        cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
+        # print("cursor_executed = ", cursor_executed)
+        movies_var = cursor.fetchall()
+        print("movies_var = ", movies_var)
+        return render_template('search_results.html', 
+        all_movies_jinja = movies_var)
 
 
-def search():
-    print("request.args1 = ", request.args)
-    if "search_input_name" in request.args:
-        #     print("request.form = ", request.form)
-        print("request.args2 = ", request.args)
-        sql_search1 = """
-        SELECT * from movie 
-        WHERE `movie.title` LIKE %s OR 
-        `movie.year` LIKE %s
-        """
-        # sql_search1 = """
-        # SELECT * from movie 
-        # WHERE year LIKE %s
-        # """
-        
-        sql_search2 = """
-        SELECT * from genre 
-        WHERE `genre.genre` LIKE %s
-        """
-        
-        sql_search3 = """
-        SELECT * from language 
-        WHERE `language.language` LIKE %s
-        """
-        
-        sql_search4 = """
-        SELECT * from actor 
-        WHERE `actor.name` LIKE %s
-        """
-        
-        sql_search5 = """
-        SELECT * from character 
-        WHERE `character.name` LIKE %s
-        """
-        
-        sql_search6 = """
-        SELECT * from productioncompany 
-        WHERE `productioncompany.name` LIKE '%s
-        """
+
 
 
 @app.route('/add', methods=['GET', 'POST'])
@@ -327,14 +219,7 @@ def add_movie():
         
         connection123.commit()
         
-        
-        
-        
-        
 
-        
-        
-        
         
         
         # CHARACTER. INSERTING FREE TEXT WITH MN RELATIONSHIP
@@ -409,22 +294,42 @@ def add_movie():
         
         connection123.commit()
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
 
 
         # THIS SHOULD NOT BE AT THE LAST PART OF THE FUNCTION else unreacheable code
         return redirect('/')
         
 
+# @app.route('/edit/<todo_id>', methods=['GET', 'POST'])
+# def edit_to_do(todo_id):
+#     if request.method == 'GET':
+        
+#         cursor = pymysql.cursors.DictCursor(conn)
+#         cursor.execute('SELECT * from categories')
+#         categories = cursor.fetchall()
+        
+#         cursor.execute("SELECT * FROM todos WHERE todo_id = " + todo_id)
+#         td = cursor.fetchone()
+#         return render_template('edit.html', todo=td,
+#                 id=todo_id,all_categories = categories)
+#     else:
+#         name = request.form['todo']
+#         comments = request.form['comments']
+#         category_id = request.form['category']
+#         sql = """
+#             UPDATE todos SET name = "{}", 
+#                 comments = "{}",
+#                 category_id = "{}"
+#             WHERE todo_id = {}
+#         """.format(name, comments, category_id, todo_id)
+#         cursor = pymysql.cursors.DictCursor(conn)
+#         cursor.execute(sql)
+#         conn.commit()
+#         cursor.close();
+#         return redirect('/')
+        
+        
+        
 
 @app.route("/movies_admin")
 def movies_admin():
@@ -575,3 +480,88 @@ if __name__ == "__main__":
 #         cursor.execute(sql, i)
 
 #         connection123.commit()
+
+
+        # sql_search_movie = """
+        # SELECT * from movie, genre
+        # WHERE `title` LIKE %s OR 
+        # `year` LIKE %s OR
+        # """
+        # # sql_search1 = """
+        # # SELECT * from movie 
+        # # WHERE year LIKE %s
+        # # """
+        
+        # # sql_search_genre = """
+        # # SELECT * from genre 
+        # # WHERE `genre` LIKE %s
+        # # """
+
+        # sql_search_genre = """
+        # WHERE `genre` LIKE %s
+        # """
+        
+        # sql_search_language = """
+        # SELECT * from language 
+        # WHERE `language` LIKE %s
+        # """
+        
+        # sql_search_actor = """
+        # SELECT * from actor 
+        # WHERE `name` LIKE %s
+        # """
+        
+        # sql_search_character = """
+        # SELECT * from character 
+        # WHERE `name` LIKE %s
+        # """
+        
+        # sql_search_productioncompany = """
+        # SELECT * from productioncompany 
+        # WHERE `name` LIKE %s
+        # """
+        
+        # sql_combined = sql_search_movie + sql_search_genre
+        # print("sql_combined = ", sql_combined)
+
+
+
+# def search():
+#     print("request.args1 = ", request.args)
+#     if "search_input_name" in request.args:
+#         #     print("request.form = ", request.form)
+#         print("request.args2 = ", request.args)
+#         sql_search1 = """
+#         SELECT * from movie 
+#         WHERE `movie.title` LIKE %s OR 
+#         `movie.year` LIKE %s
+#         """
+#         # sql_search1 = """
+#         # SELECT * from movie 
+#         # WHERE year LIKE %s
+#         # """
+        
+#         sql_search2 = """
+#         SELECT * from genre 
+#         WHERE `genre.genre` LIKE %s
+#         """
+        
+#         sql_search3 = """
+#         SELECT * from language 
+#         WHERE `language.language` LIKE %s
+#         """
+        
+#         sql_search4 = """
+#         SELECT * from actor 
+#         WHERE `actor.name` LIKE %s
+#         """
+        
+#         sql_search5 = """
+#         SELECT * from character 
+#         WHERE `character.name` LIKE %s
+#         """
+        
+#         sql_search6 = """
+#         SELECT * from productioncompany 
+#         WHERE `productioncompany.name` LIKE '%s
+#         """
