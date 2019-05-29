@@ -1,12 +1,15 @@
 {% extends "layout_search_results.html" %}
 
 {% block content %}
-    <h3>SEARCH RESULTS</h3>
-
+    <h1>Search Results</h1>
+    <h4> <em>(click on each header to sort)</em> </h4>
+<!--class="headerSortUp headerSortDown" -->
+<!--class="table-sortable"-->
 <!--<div class="tableFixHead">-->
-    <table class="table" id="tableFixHead">
+    <table class="table sortable" id="tableFixHead">
   <thead class="thead-dark">
     <tr>
+      <!--class="sort-by"-->
       <th scope="col">#</th>
       <th scope="col">Movie Id</th>
       <th scope="col">Movie Title</th>
@@ -29,7 +32,7 @@
   <tbody>
     <tr>
     {% for i in all_movies_jinja %}
-      <th scope="row">{{ loop.index }}</th>
+      <th class="table-responsive" id="dtBasicExample" scope="row">{{ loop.index }}</th>
       <td>{{ i.id }}</td>
       <td>{{ i.title }}</td>
       <td>{{ i["genre.id"] }}</td>

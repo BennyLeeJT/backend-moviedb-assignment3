@@ -3,16 +3,6 @@
 {% block content %}
 	
 
-	<!-- home -->
-	<section class="home">
-		<!-- home bg -->
-		<div class="owl-carousel home__bg">
-			<div class="item home__cover" data-bg="img/home/home__bg.jpg"></div>
-			<div class="item home__cover" data-bg="img/home/home__bg2.jpg"></div>
-			<div class="item home__cover" data-bg="img/home/home__bg3.jpg"></div>
-			<div class="item home__cover" data-bg="img/home/home__bg4.jpg"></div>
-		</div>
-		<!-- end home bg -->
 
 <div class="container">
 <h1>ADD MOVIES HERE</h1>
@@ -20,7 +10,7 @@
     <form method='POST'>
         <div class="formtext">
             <label>Movie Title : </label>
-            <input type='text' name='input_name_title'></input>
+            <input type='text' name='input_name_title' required></input>
         </div>
         
         <div class="formtext">
@@ -30,7 +20,7 @@
         
         <div class="formtext">
             <label>Censor Rating : </label>
-            <select name='input_name_censorrating'>
+            <select name='input_name_censorrating' required>
                 {% for i in all_censorratings_jinja %}
                 <option value='{{i.id}}'>{{i.censorrating}}</option>
                 {% endfor %}
@@ -39,17 +29,17 @@
 
         <div class="formtext">
             <label>Runtime (in mins) : </label>
-            <input type='number' name='input_name_runtime' min="0"></input>
+            <input type='number' name='input_name_runtime' min="0" required></input>
         </div>
         
         <div class="formtext">
             <label>Review Rating : </label>
-            <input type='number' name='input_name_reviewrating' step="0.1" min="0" max="10"></input>
+            <input type='number' name='input_name_reviewrating' step="0.1" min="0" max="10" required></input>
         </div>
         
         <div class="formtext">
             <label>Year of Release : </label>
-            <input type='number' name='input_name_year' min="1800" max=2030 id="input_id_year"></input>
+            <input type='number' name='input_name_year' min="1800" max=2030 id="input_id_year" required></input>
         </div>
         
 
@@ -76,17 +66,17 @@
         
         <div class="formtext">
             <label>Actors : </label>
-            <input type='text' name='input_name_actor'></input>
+            <input type='text' name='input_name_actor' required></input>
         </div>
         
         <div class="formtext">
             <label>Character Roles : </label>
-            <input type='text' name='input_name_character'></input>
+            <input type='text' name='input_name_character' required></input>
         </div>
         
         <div class="formtext">
             <label>Production Company : </label>
-            <input type='text' name='input_name_productioncompany'></input>
+            <input type='text' name='input_name_productioncompany' required></input>
         </div>
         
         
@@ -96,5 +86,23 @@
     </form>
 </div>
 
+<p></p>
+
+<div class="container">
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <!--<ul class=flashes>-->
+    <div class=flashes>
+    {% for category, message in messages %}
+        {{ message }}
+      <!--<li>{{ message }}</li>-->
+     
+    {% endfor %}
+    </div>
+    <!--</ul>-->
+  {% endif %}
+{% endwith %}
+
+</div>
 
 {% endblock %}

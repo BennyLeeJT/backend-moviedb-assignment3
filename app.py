@@ -2,37 +2,27 @@ from flask import Flask
 from flask import request
 from flask import render_template
 from flask import redirect
+
+from flask import flash
+
 import numpy
 from imdb import IMDb
 
 import pymysql
+import os
+app = Flask(__name__)
 
 connection123 = pymysql.connect(host="localhost",
                             user="roczi",
                             password="",
                             db=("moviesdb"))
-                        
-import os
-app = Flask(__name__)
-
+                            
 cursor = pymysql.cursors.DictCursor(connection123)
 
-@app.route('/test')
-def test():
-    return render_template('test.html')
-    
-@app.route('/')
-def home():
-    print("request.args = ", request.args)
-    
-    if 'search_input_name' not in request.args:
-        print("IF CONDITION")
-        return render_template("index.html")
-    else:
-        search_for = "%" + request.args['search_input_name'] + "%"
-        print("ELSE CONDITION : search_for = ", search_for)
-        
-        sql_query_all_tables_joined = """
+app.secret_key = 'some_secret'
+
+
+sql_query_all_tables_joined = """
         SELECT * 
         FROM movie
         
@@ -69,8 +59,26 @@ def home():
         `year`.`id` LIKE %s
         """
         
+        
+@app.route('/test')
+def test():
+    return render_template('test.html')
+
+
+@app.route('/')
+def home():
+    print("request.args = ", request.args)
+    
+    if 'search_input_name' not in request.args:
+        print("IF CONDITION")
+        return render_template("index.html")
+    else:
+        search_for = "%" + request.args['search_input_name'] + "%"
+        print("ELSE CONDITION : search_for = ", search_for)
+        
+        
+        
         # print("sql_query_all_tables_joined = ", sql_query_all_tables_joined)
-        cursor = pymysql.cursors.DictCursor(connection123)
         cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
         # print("cursor_executed = ", cursor_executed)
         movies_var = cursor.fetchall()
@@ -83,27 +91,46 @@ def home():
 
 
 @app.route('/add', methods=['GET', 'POST'])
-def add_movie():
+def addpage_including_search():
     if request.method == 'GET':
+        if 'search_input_name' not in request.args:
+            print("IF CONDITION")
+            
+            cursor.execute('SELECT * from language')
+            language_var = cursor.fetchall()
+            print("language_var = ", language_var)
+            
+            cursor.execute('SELECT * from genre')
+            genre_var = cursor.fetchall()
+            print("genre_var = ", genre_var)
+            # cursor.execute('SELECT * from genre')
+            # genre_var = cursor.fetchall()
+            
+            cursor.execute('SELECT * from censorrating')
+            censorrating_var = cursor.fetchall()
+            print("censorrating_var = ", censorrating_var)
+            
+            return render_template('add_movie.html', 
+            all_languages_jinja = language_var, 
+            all_genres_jinja = genre_var,
+            all_censorratings_jinja = censorrating_var,
+            )
+            
+            # return render_template("add_movie.html")
+        else:
+            search_for = "%" + request.args['search_input_name'] + "%"
+            print("ELSE CONDITION : search_for = ", search_for)
+            
+            # print("sql_query_all_tables_joined = ", sql_query_all_tables_joined)
+            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
+            # print("cursor_executed = ", cursor_executed)
+            movies_var = cursor.fetchall()
+            print("movies_var = ", movies_var)
+            return render_template('search_results.html', 
+            all_movies_jinja = movies_var)
+            
         
-        cursor.execute('SELECT * from language')
-        language_var = cursor.fetchall()
-        
-        cursor.execute('SELECT * from genre')
-        genre_var = cursor.fetchall()
-        # print("genre_var = ", genre_var)
-        # cursor.execute('SELECT * from genre')
-        # genre_var = cursor.fetchall()
-        
-        cursor.execute('SELECT * from censorrating')
-        censorrating_var = cursor.fetchall()
-        # print("censorrating_var = ", censorrating_var)
-        
-        return render_template('add_movie.html', 
-        all_languages_jinja = language_var, 
-        all_genres_jinja = genre_var,
-        all_censorratings_jinja = censorrating_var,
-        )
+
 
     else:
         print("request.form = ", request.form)
@@ -294,10 +321,39 @@ def add_movie():
         
         connection123.commit()
         
-
+        flash("Your Movie has been entered successfully! Thank you for populating CinemaTronix Database for the greater good! \U0001F44D ", "error")
 
         # THIS SHOULD NOT BE AT THE LAST PART OF THE FUNCTION else unreacheable code
-        return redirect('/')
+        return redirect('/add')
+        
+
+
+
+@app.route('/database')
+def database_including_search():
+    if 'search_input_name' not in request.args:
+        # print("request.args = ", request.args)
+        # print("IF CONDITION")
+        cursor.execute(sql_all_movies_data)
+        movies_var = cursor.fetchall()
+        # print("movies_var = ", movies_var)
+        print("database function running")
+        
+        return render_template("all_movies.html", all_movies_jinja = movies_var)
+
+    else:
+        search_for = "%" + request.args['search_input_name'] + "%"
+        print("ELSE CONDITION : search_for = ", search_for)
+
+        # print("sql_query_all_tables_joined = ", sql_query_all_tables_joined)
+
+        cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
+        # print("cursor_executed = ", cursor_executed)
+        movies_var = cursor.fetchall()
+        # print("movies_var = ", movies_var)
+        return render_template('search_results.html', 
+        all_movies_jinja = movies_var)
+        
         
 
 # @app.route('/edit/<todo_id>', methods=['GET', 'POST'])
@@ -330,10 +386,7 @@ def add_movie():
         
         
         
-
-@app.route("/movies_admin")
-def movies_admin():
-    cursor.execute("""
+sql_all_movies_data = """
     SELECT * 
     FROM movie
     
@@ -358,7 +411,11 @@ def movies_admin():
 
     LEFT JOIN `year` ON `movie`.`year` = `year`.`id`
 
-    """)
+    """
+    
+@app.route("/movies_admin")
+def movies_admin():
+    cursor.execute(sql_all_movies_data)
     movies_var = cursor.fetchall()
     print("movies_var = ", movies_var)
     

@@ -1,35 +1,38 @@
 {% extends "layout_search_results.html" %}
 
 {% block content %}
-    <h3  style="color: white">All Movies in the Database</h3>
-
-<!--<div class="tableFixHead">-->
-    <table class="table" id="tableFixHead">
+    <h1  style="color: white">All Movies in the Database</h1>
+    <h4> <em>(click on each header to sort)</em> </h4>
+      <!--class="headerSortUp headerSortDown" -->
+      <!--class="table-sortable"-->
+<!--<div class="table-responsive">-->
+  <table class="table sortable" id="tableFixHead">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">Movie Id</th>
-      <th scope="col">Movie Title</th>
-      <th scope="col">Genre Id</th>
-      <th scope="col">Genre</th>
-      <th scope="col">Year</th>
-      <th scope="col">Review Rating</th>
-      <th scope="col">Language</th>
-      <th scope="col">Info</th>
-      <th scope="col">Actor Id</th>
-      <th scope="col">Actor Name</th>
-      <th scope="col">Character Name</th>
-      <th scope="col">Runtime</th>
-      <th scope="col">Censor Rating</th>
-      <th scope="col">Production Company</th>
+      <!--class="sort-by"-->
+      <th class="th_sort" scope="col">#</th>
+      <th class="th_sort" scope="col">Movie Id</th>
+      <th class="th_sort" scope="col">Movie Title</th>
+      <th class="th_sort" scope="col">Genre Id</th>
+      <th class="th_sort" scope="col">Genre</th>
+      <th class="th_sort" scope="col">Year</th>
+      <th class="th_sort" scope="col">Review Rating</th>
+      <th class="th_sort" scope="col">Language</th>
+      <th class="th_sort" scope="col">Info</th>
+      <th class="th_sort" scope="col">Actor Id</th>
+      <th class="th_sort" scope="col">Actor Name</th>
+      <th class="th_sort" scope="col">Character Name</th>
+      <th class="th_sort" scope="col">Runtime</th>
+      <th class="th_sort" scope="col">Censor Rating</th>
+      <th class="th_sort" scope="col">Production Company</th>
 
-      
+
     </tr>
   </thead>
   <tbody>
     <tr>
     {% for i in all_movies_jinja %}
-      <th scope="row">{{ loop.index }}</th>
+      <th class="table-responsive" id="dtBasicExample" scope="row">{{ loop.index }}</th>
       <td>{{ i.id }}</td>
       <td>{{ i.title }}</td>
       <td>{{ i["genre.id"] }}</td>

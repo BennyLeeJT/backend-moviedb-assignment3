@@ -27,19 +27,281 @@
 	<meta name="keywords" content="">
 	<meta name="author" content="RocZi">
 	
-    <style type="text/css">
-      #tableFixHead    { overflow-y: auto; height: 100%; }
-      #tableFixHead th { position: sticky; top: 0; }
-      h3, tbody {	color: white; }
-      #logo_pic { height: 100px }
-    </style>
+
+
+  	<style type="text/css">
+	    #tableFixHead    { overflow-y: auto; height: 100%; }
+	    #tableFixHead th { position: sticky; top: 85px; }
+	    
+	    h1, h2, h3, h4, h5, h6, tbody, .container, form 
+	      {
+	      	color: white;
+	      }
+	    
+	    /*h1 {text-decoration: underline;}*/
+	    
+	    #logo_pic { width:auto; max-width:60%;}
+	    
+	    .home_p { font-size: 1em;}
+    
+    /*for the sort arrows*/
+    table.sortable .th_sort:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after { 
+    content: " \25B4\25BE" 
+	}
+    
+    
+  /*  	.headerSortDown:after,*/
+		/*.headerSortUp:after {*/
+		/*  content: ' ';*/
+		/*  position: relative;*/
+		/*  left: 2px;*/
+		/*  border: 8px solid transparent;*/
+		/*}*/
+		
+		/*.headerSortDown:after {*/
+		/*  top: 10px;*/
+		/*  border-top-color: silver;*/
+		/*}*/
+		
+		/*.headerSortUp:after {*/
+		/*  bottom: 15px;*/
+		/*  border-bottom-color: silver;*/
+		/*}*/
+		
+		/*.headerSortDown,*/
+		/*.headerSortUp {*/
+		/*  padding-right: 10px;*/
+		/*}*/
+		
+		/*.table-sortable > thead > tr > th {*/
+		/*  cursor: pointer;*/
+		/*  position: relative;*/
+		/*}*/
+		
+		/*.table-sortable > thead > tr > th:after,*/
+		/*.table-sortable > thead > tr > th:after,*/
+		/*.table-sortable > thead > tr > th:after {*/
+		/*  content: ' ';*/
+		/*	position: absolute;*/
+		/*  height: 0;*/
+		/*  width: 0;*/
+		  right: 10px; /* (right padding / 2) - arrow width */
+		  top: 16px; /* ((padding * 2) + line height) - arrow height */
+		  /** As pointed out by Dave Everitt in 
+		   * https://css-tricks.com/snippets/css/css-triangle/
+		   * The arrow is not an equilateral triangle.
+		   * the height is 86.6% of the width.
+		   * Notice the above code does not subract the border 
+		   * width exactly. It is subtracting
+		   * (rounded) border width * 86.6%
+		   **/
+		/*}*/
+		
+		/* Default sortable indicator */
+		/*.table-sortable > thead > tr > th:after {*/
+		/*  border-left: 5px solid transparent;*/
+		/*	border-right: 5px solid transparent;*/
+		/*	border-top: 5px solid #ccc;*/
+		/*  border-bottom: 0px solid transparent;*/
+		/*}*/
+		/* !Default */
+		
+		/* Default sortable indicator:hover */
+		/*.table-sortable > thead > tr > th:hover:after {*/
+		/*	border-top: 5px solid #888;*/
+		/*}*/
+		/* !Default:hover */
+		
+		/* Ascending sortable indicator */
+		/*.table-sortable > thead > tr > th.asc:after {*/
+		/*  border-left: 5px solid transparent;*/
+		/*	border-right: 5px solid transparent;*/
+		/*  border-top: 0px solid transparent;*/
+		/*	border-bottom: 5px solid #333;*/
+		/*}*/
+		/*.table-sortable > thead > tr > th.asc:hover:after {*/
+		/*	border-bottom: 5px solid #888;*/
+		/*}*/
+		/* !Ascending */
+		
+		/* Descending sortable indicator */
+		/*.table-sortable > thead > tr > th.desc:after {    */
+		/*  border-left: 5px solid transparent;*/
+		/*	border-right: 5px solid transparent;*/
+		/*  border-top: 5px solid #333;*/
+		/*	border-bottom: 5px solid transparent;*/
+		/*}*/
+		/* !Descending */
+		
+		
+		
+		
+		
+		
+		/* Heading styles */
+		/*h2.page-header {*/
+		/*  margin-top: 0px;*/
+		/*  padding-top: 0px;*/
+		/*  line-height: 15px;*/
+		/*  vertical-align: middle;*/
+		/*}*/
+		/*h1 > .divider:before,*/
+		/*h2 > .divider:before,*/
+		/*h3 > .divider:before,*/
+		/*h4 > .divider:before,*/
+		/*h5 > .divider:before,*/
+		/*h6 > .divider:before,*/
+		/*.h1 > .divider:before,*/
+		/*.h2 > .divider:before,*/
+		/*.h3 > .divider:before,*/
+		/*.h4 > .divider:before,*/
+		/*.h5 > .divider:before,*/
+		/*.h6 > .divider:before {*/
+		/*  color: #777;*/
+		/*  content: "\0223E\0020";*/
+		/*}*/
+
+
+
+		
+  	</style>
     
     <title>CinemaTronix – Movies Database Galore</title>
+    
   </head>
-  <body>
+  
+<body class="body">
+    	<!-- header -->
+	<header class="header">
+		<div class="header__wrap">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<div class="header__content" >
+							 
+							<!-- header logo -->
+							<!--<a href="index.html" class="header__logo">-->
+								<!--<img src="{{ url_for("static", filename="assets/css/ionicons.min.css") }}">-->
+								<img id="logo_pic" src="{{ url_for("static", filename="assets/img/CinemaTronix (cropped) (resized90h).png") }}">
+	<!--<link rel="stylesheet" alt="" href="{{ url_for("static", filename="assets/img/CinemaTronix(cropped).png") }}">-->
+							</a>
+							<!-- end header logo -->
+
+							<!-- header nav -->
+							<ul class="header__nav">
+								<!-- dropdown -->
+								<!--<li class="header__nav-item">-->
+								<!--	<a class="dropdown-toggle header__nav-link" href="http://backend-assignment3-roczi.c9users.io:8080/" role="button" id="dropdownMenuHome" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Home</a>-->
+
+									<!--<ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuHome">-->
+										<!--<li><a href="index.html">Home slideshow bg</a></li>-->
+										<!--<li><a href="index2.html">Home static bg</a></li>-->
+									<!--</ul>-->
+								<!--</li>-->
+								<!-- end dropdown -->
+
+								<!-- dropdown -->
+								<!--<li class="header__nav-item">-->
+								<!--	<a class="dropdown-toggle header__nav-link" href="#" role="button" id="dropdownMenuCatalog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catalog</a>-->
+
+								<!--	<ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuCatalog">-->
+								<!--		<li><a href="catalog1.html">Catalog Grid</a></li>-->
+								<!--		<li><a href="catalog2.html">Catalog List</a></li>-->
+								<!--		<li><a href="details1.html">Details Movie</a></li>-->
+								<!--		<li><a href="details2.html">Details TV Series</a></li>-->
+								<!--	</ul>-->
+								<!--</li>-->
+								<!-- end dropdown -->
+								
+								<li class="header__nav-item">
+									<a href="http://backend-assignment3-roczi.c9users.io:8080/" class="header__nav-link">Home</a>
+								</li>
+								
+								<li class="header__nav-item">
+									<a href="http://backend-assignment3-roczi.c9users.io:8080/add" class="header__nav-link">Add Movie</a>
+								</li>
+
+								<li class="header__nav-item">
+									<a href="http://backend-assignment3-roczi.c9users.io:8080/database" class="header__nav-link">Full Database</a>
+								</li>
+
+								<!-- dropdown -->
+								<!--<li class="dropdown header__nav-item">-->
+								<!--	<a class="dropdown-toggle header__nav-link header__nav-link--more" href="#" role="button" id="dropdownMenuMore" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon ion-ios-more"></i></a>-->
+
+								<!--	<ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuMore">-->
+								<!--		<li><a href="about.html">About</a></li>-->
+								<!--		<li><a href="signin.html">Sign In</a></li>-->
+								<!--		<li><a href="signup.html">Sign Up</a></li>-->
+								<!--		<li><a href="404.html">404 Page</a></li>-->
+								<!--	</ul>-->
+								<!--</li>-->
+								<!-- end dropdown -->
+							</ul>
+							<!-- end header nav -->
+
+							<!-- header auth -->
+							<div class="header__auth">
+								<button class="header__search-btn" type="button">
+									<i class="icon ion-ios-search"></i>
+								</button>
+
+								<a href="signin.html" class="header__sign-in">
+									<i class="icon ion-ios-log-in"></i>
+									<span>sign in</span>
+								</a>
+							</div>
+							<!-- end header auth -->
+
+							<!-- header menu btn -->
+							<button class="header__btn" type="button">
+								<span></span>
+								<span></span>
+								<span></span>
+							</button>
+							<!-- end header menu btn -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- header search -->
+		<form method="GET" class="header__search">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<div class="header__search-content">
+							<input type="text" placeholder="Enter ONLY 1 keyword to search for what you are looking for" name="search_input_name">
+
+							<button type="submit">search</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<!-- end header search -->
+	</header>
+	<!-- end header -->
+	
+	<!-- home -->
+	<section class="home">
+		<!-- home bg -->
+		<div class="owl-carousel home__bg">
+			<div class="item home__cover" data-bg="{{ url_for("static", filename="assets/img/home/home__bg.jpg") }}"></div>
+			<div class="item home__cover" data-bg="{{ url_for("static", filename="assets/img/home/home__bg2.jpg") }}"></div>
+			<div class="item home__cover" data-bg="{{ url_for("static", filename="assets/img/home/home__bg3.jpg") }}"></div>
+			<div class="item home__cover" data-bg="{{ url_for("static", filename="assets/img/home/home__bg4.jpg") }}"></div>
+		</div>
+		<!-- end home bg -->
+
         {%block content %}
         {%endblock %}
+    
 
+	</section>
+	<!-- end home -->
+	
 	<!-- footer -->
 	<footer class="footer">
 		<div class="container">
@@ -127,6 +389,9 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+	<!--table sort-->
+	<script src="{{ url_for("static", filename="assets/js/sorttable.js") }}"></script>
 
 
   </body>

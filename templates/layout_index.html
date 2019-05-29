@@ -32,18 +32,58 @@
 	<meta name="author" content="RocZi">
 	
     <style>
-      h1, h2, h3, tbody, .container, form {
-      	color: white;
-      }
-      input {-webkit-appearance:none;
-              
-           }
+      h1, h2, h3, tbody, .container, form 
+      {	color: white; }
+      
+      h1 {text-decoration: underline;}
+      
+      /*input {-webkit-appearance: ;}*/
+     
+     select::-ms-expand { display: block; }
+     
       textarea { vertical-align: top; }
-    </style>
-	
+      
+      #logo_pic { width:auto; max-width:60%;}
+      
+      .home_p { font-size: 1.2em;}
+      
+      .flashes 
+      { 
+      	color: #DF4F8C; 
+      	/*text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;*/
+      	/*-webkit-text-stroke-color: white;*/
+      	/*color: white;*/
+		-webkit-text-fill-color: #DF4F8C; /* Will override color (regardless of order) */
+		/*-webkit-text-stroke-width: 0.05px;*/
+		/*-webkit-text-stroke-color: white;*/
+		font-size: 1.1rem;
+      }
+
+      #home_div_ul_li
+      {
+    	padding-left: 3em;
+    	/*border-left: 3em;*/
+    	/*margin-left: 3em;*/
+      }
+      
+      #home_div_ul_li #home_ul_li li
+      {
+      	list-style-type: circle;
+    	/*padding-left: 3em;*/
+    	/*border-left: 3em;*/
+    	/*margin-left: 3em;*/
+    	/*list-style-position: inside;*/
+ 		text-align: left;
+		margin: 10px 0;
+      }
+      .clear { clear: both; }
+      
+      </style>
+
 	<title>CinemaTronix – Movies Database Galore</title>
 
 </head>
+
 <body class="body">
     	<!-- header -->
 	<header class="header">
@@ -64,48 +104,52 @@
 							<!-- header nav -->
 							<ul class="header__nav">
 								<!-- dropdown -->
-								<li class="header__nav-item">
-									<a class="dropdown-toggle header__nav-link" href="#" role="button" id="dropdownMenuHome" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Home</a>
+								<!--<li class="header__nav-item">-->
+								<!--	<a class="dropdown-toggle header__nav-link" href="http://backend-assignment3-roczi.c9users.io:8080/" role="button" id="dropdownMenuHome" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Home</a>-->
 
-									<ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuHome">
-										<li><a href="index.html">Home slideshow bg</a></li>
-										<li><a href="index2.html">Home static bg</a></li>
-									</ul>
-								</li>
+									<!--<ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuHome">-->
+										<!--<li><a href="index.html">Home slideshow bg</a></li>-->
+										<!--<li><a href="index2.html">Home static bg</a></li>-->
+									<!--</ul>-->
+								<!--</li>-->
 								<!-- end dropdown -->
 
 								<!-- dropdown -->
-								<li class="header__nav-item">
-									<a class="dropdown-toggle header__nav-link" href="#" role="button" id="dropdownMenuCatalog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catalog</a>
+								<!--<li class="header__nav-item">-->
+								<!--	<a class="dropdown-toggle header__nav-link" href="#" role="button" id="dropdownMenuCatalog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catalog</a>-->
 
-									<ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuCatalog">
-										<li><a href="catalog1.html">Catalog Grid</a></li>
-										<li><a href="catalog2.html">Catalog List</a></li>
-										<li><a href="details1.html">Details Movie</a></li>
-										<li><a href="details2.html">Details TV Series</a></li>
-									</ul>
-								</li>
+								<!--	<ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuCatalog">-->
+								<!--		<li><a href="catalog1.html">Catalog Grid</a></li>-->
+								<!--		<li><a href="catalog2.html">Catalog List</a></li>-->
+								<!--		<li><a href="details1.html">Details Movie</a></li>-->
+								<!--		<li><a href="details2.html">Details TV Series</a></li>-->
+								<!--	</ul>-->
+								<!--</li>-->
 								<!-- end dropdown -->
-
+								
+								<li class="header__nav-item">
+									<a href="http://backend-assignment3-roczi.c9users.io:8080/" class="header__nav-link">Home</a>
+								</li>
+								
 								<li class="header__nav-item">
 									<a href="http://backend-assignment3-roczi.c9users.io:8080/add" class="header__nav-link">Add Movie</a>
 								</li>
 
 								<li class="header__nav-item">
-									<a href="faq.html" class="header__nav-link">Help</a>
+									<a href="http://backend-assignment3-roczi.c9users.io:8080/database" class="header__nav-link">Full Database</a>
 								</li>
 
 								<!-- dropdown -->
-								<li class="dropdown header__nav-item">
-									<a class="dropdown-toggle header__nav-link header__nav-link--more" href="#" role="button" id="dropdownMenuMore" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon ion-ios-more"></i></a>
+								<!--<li class="dropdown header__nav-item">-->
+								<!--	<a class="dropdown-toggle header__nav-link header__nav-link--more" href="#" role="button" id="dropdownMenuMore" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon ion-ios-more"></i></a>-->
 
-									<ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuMore">
-										<li><a href="about.html">About</a></li>
-										<li><a href="signin.html">Sign In</a></li>
-										<li><a href="signup.html">Sign Up</a></li>
-										<li><a href="404.html">404 Page</a></li>
-									</ul>
-								</li>
+								<!--	<ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuMore">-->
+								<!--		<li><a href="about.html">About</a></li>-->
+								<!--		<li><a href="signin.html">Sign In</a></li>-->
+								<!--		<li><a href="signup.html">Sign Up</a></li>-->
+								<!--		<li><a href="404.html">404 Page</a></li>-->
+								<!--	</ul>-->
+								<!--</li>-->
 								<!-- end dropdown -->
 							</ul>
 							<!-- end header nav -->
@@ -142,7 +186,7 @@
 				<div class="row">
 					<div class="col-12">
 						<div class="header__search-content">
-							<input type="text" placeholder="Search for a movie that you are looking for" name="search_input_name">
+							<input type="text" placeholder="Enter ONLY 1 keyword to search for what you are looking for" name="search_input_name">
 
 							<button type="submit">search</button>
 						</div>
@@ -154,15 +198,24 @@
 	</header>
 	<!-- end header -->
 	
-	
-	
+	<!-- home -->
+	<section class="home">
+		<!-- home bg -->
+		<div class="owl-carousel home__bg">
+			<div class="item home__cover" data-bg="{{ url_for("static", filename="assets/img/home/home__bg.jpg") }}"></div>
+			<div class="item home__cover" data-bg="{{ url_for("static", filename="assets/img/home/home__bg2.jpg") }}"></div>
+			<div class="item home__cover" data-bg="{{ url_for("static", filename="assets/img/home/home__bg3.jpg") }}"></div>
+			<div class="item home__cover" data-bg="{{ url_for("static", filename="assets/img/home/home__bg4.jpg") }}"></div>
+		</div>
+		<!-- end home bg -->
 	
 	
 	
     {% block content %}
     {% endblock %}
 
-
+	</section>
+	<!-- end home -->
 
 
 	<!-- footer -->
@@ -247,6 +300,12 @@
 	<script src="{{ url_for('static', filename='assets/js/photoswipe.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='assets/js/photoswipe-ui-default.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+		    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 </body>
 
 </html>
