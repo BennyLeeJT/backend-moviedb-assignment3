@@ -1,0 +1,52 @@
+h1, h2, h3, tbody, .container, form 
+{	color: white; }
+
+h1 {text-decoration: underline;}
+
+/*input {-webkit-appearance: ;}*/
+
+select::-ms-expand { display: block; }
+
+textarea { vertical-align: top; }
+
+#logo_pic { width:auto; max-width:60%;}
+
+.home_p { font-size: 1.2em;}
+
+.flashes 
+{ 
+  color: #DF4F8C; 
+  /*text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;*/
+  /*-webkit-text-stroke-color: white;*/
+  /*color: white;*/
+-webkit-text-fill-color: #DF4F8C; /* Will override color (regardless of order) */
+/*-webkit-text-stroke-width: 0.05px;*/
+/*-webkit-text-stroke-color: white;*/
+font-size: 1.1rem;
+}
+
+#home_div_ul_li
+{
+padding-left: 3em;
+/*border-left: 3em;*/
+/*margin-left: 3em;*/
+}
+
+#home_div_ul_li #home_ul_li li
+{
+  list-style-type: circle;
+/*padding-left: 3em;*/
+/*border-left: 3em;*/
+/*margin-left: 3em;*/
+/*list-style-position: inside;*/
+ text-align: left;
+margin: 10px 0;
+}
+.clear { clear: both; }
+
+::selection {
+background: red;
+/*color: #000;*/
+/*text-shadow: none;*/
+}
+

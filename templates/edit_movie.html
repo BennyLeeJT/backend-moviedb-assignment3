@@ -1,0 +1,108 @@
+{% extends "layout_index.html" %}
+
+{% block content %}
+	
+
+
+<div class="container">
+<h1>EDIT MOVIES HERE</h1>
+<h2>Editing Movie ID {{ movie_fetchone_jinja.id }}</h2>
+    <form method='POST'>
+        <div class="formtext">
+            <label>Movie Title : </label>
+            <input type='text' name='input_name_title' value='{{movie_fetchone_jinja.title}}' required></input>
+        </div>
+        
+        <div class="formtext">
+            <label>Description info of movie : </label>
+            <textarea name='input_name_info'  rows="8" cols="50">{{movie_fetchone_jinja.info}}</textarea>
+        </div>
+        
+        <div class="formtext">
+            <label>Censor Rating : </label>
+            <select name='input_name_censorrating' required>
+                {% for i in all_censorratings_jinja %}
+                <option value='{{i.id}}'>{{i.censorrating}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formtext">
+            <label>Runtime (in mins) : </label>
+            <input type='number' name='input_name_runtime' min="0" value='{{movie_fetchone_jinja.runtime}}' required></input>
+        </div>
+        
+        <div class="formtext">
+            <label>Review Rating : </label>
+            <input type='number' name='input_name_reviewrating' step="0.1" min="0" max="10" value='{{movie_fetchone_jinja.reviewrating}}' required></input>
+        </div>
+        
+        <div class="formtext">
+            <label>Year of Release : </label>
+            <input type='number' name='input_name_year' min="1800" max=2030 id="input_id_year" value='{{movie_fetchone_jinja.year}}' required></input>
+        </div>
+        
+
+
+
+
+        <div class="formtext">
+            <label>Genre : </label>
+            <select name='input_name_genre'>
+                {% for i in all_genres_jinja %}
+                <option value='{{i.id}}'>{{i.genre}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="formtext">
+            <label>Languages : </label>
+            <select name='input_name_language'>
+                {% for i in all_languages_jinja %}
+                <option value='{{i.id}}'>{{i.language}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="formtext">
+            <label>Actors : </label>
+            <input type='text' name='input_name_actor' value='{{movie_fetchone_jinja.name}}' required></input>
+        </div>
+        
+        <div class="formtext">
+            <label>Character Roles : </label>
+            <input type='text' name='input_name_character' value='{{movie_fetchone_jinja.name}}' required></input>
+        </div>
+        
+        <div class="formtext">
+            <label>Production Company : </label>
+            <input type='text' name='input_name_productioncompany' value='{{movie_fetchone_jinja.name}}' required></input>
+        </div>
+        
+        
+        
+        
+        <input type='submit'>
+    </form>
+</div>
+
+<p></p>
+
+<div class="container">
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <!--<ul class=flashes>-->
+    <div class=flashes>
+    {% for category, message in messages %}
+        {{ message }}
+      <!--<li>{{ message }}</li>-->
+     
+    {% endfor %}
+    </div>
+    <!--</ul>-->
+  {% endif %}
+{% endwith %}
+
+</div>
+
+{% endblock %}

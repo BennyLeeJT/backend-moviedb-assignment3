@@ -384,7 +384,307 @@ def database_including_search():
 #         cursor.close();
 #         return redirect('/')
         
+
+
+
+@app.route('/edit/<id>', methods=['GET', 'POST']) # id here same as table column name
+def edit_movie_including_search(id): # id here pass in from route parameter as argument, same as table column name
+    if request.method == 'GET':
+        # if 'search_input_name' not in request.args:
+            print("IF CONDITION")
+            print("id from route = ", id)
+            
+            cursor.execute('SELECT * from language')
+            language_var = cursor.fetchall()
+            # print("language_var = ", language_var)
+            
+            cursor.execute('SELECT * from genre')
+            genre_var = cursor.fetchall()
+            # print("genre_var = ", genre_var)
+            # cursor.execute('SELECT * from genre')
+            # genre_var = cursor.fetchall()
+            
+            cursor.execute('SELECT * from censorrating')
+            censorrating_var = cursor.fetchall()
+            # print("censorrating_var = ", censorrating_var)
+            
+            
+            
+            # movie_data_from_id = cursor.execute(sql_all_movies_data_withID + id) # test putting into variable. there is no need to put in varaible.
+            # print("movie_data_from_id = ", movie_data_from_id) # returns 1
+            # movietest = movie_data_from_id # returns 1
+            # print("movietest = ", movietest) # returns 1
+            # ans = 10 + movie_data_from_id 
+            # print("ans = ", ans) # returns 11.
+            
+            
+            
+            
+            # see below for sql_all_movies_data_withID sql statement. this is to execute the sql statement to join all tables using the id indirectly from route parameter which is pass into the sql statement using concatenation. + id here will be directly from function parameter.all tables because we need all info pertaining to this id to populate the edit fields.
+            cursor.execute(sql_all_movies_data_withID + id) 
+            # this 2nd step is needed to fetch just the movie data from the id
+            movie_fetchone_sql = cursor.fetchone()
+            print("movie_fetchone_sql = ", movie_fetchone_sql)
+            
+            # id here pass in from FUNCTION parameter as argument, same as table column name
+            return render_template('edit_movie.html', 
+            all_languages_jinja = language_var, 
+            all_genres_jinja = genre_var,
+            all_censorratings_jinja = censorrating_var,
+            movie_id_jinja = id,
+            movie_fetchone_jinja = movie_fetchone_sql,
+            )
+            
+            
+        # else:
+        #     search_for = "%" + request.args['search_input_name'] + "%"
+        #     print("ELSE CONDITION : search_for = ", search_for)
+            
+        #     # print("sql_query_all_tables_joined = ", sql_query_all_tables_joined)
+        #     cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
+        #     # print("cursor_executed = ", cursor_executed)
+        #     movies_var = cursor.fetchall()
+        #     print("movies_var = ", movies_var)
+        #     return render_template('search_results.html', 
+        #     all_movies_jinja = movies_var)
+            
         
+
+
+    # else:
+    #     print("request.form = ", request.form)
+    #     title_var = request.form['input_name_title']
+    #     runtime_var = request.form['input_name_runtime']
+    #     info_var = request.form['input_name_info']
+    #     year_var = request.form['input_name_year']
+    #     reviewrating_var = request.form['input_name_reviewrating']
+    #     censorrating_var = request.form['input_name_censorrating']
+    #     # print("censorrating_var = ", censorrating_var)
+    #     genre_var = request.form['input_name_genre']
+    #     language_var = request.form['input_name_language']
+    #     actor_var = request.form['input_name_actor']
+    #     character_var = request.form['input_name_character']
+    #     productioncompany_var = request.form['input_name_productioncompany']
+            
+            
+    #     sql_movie = """
+    #         INSERT INTO movie (id, title, year, reviewrating, info, runtime, censorrating) 
+    #         VALUES (%s,%s,%s,%s,%s,%s,%s);
+    #     """
+    #     sql_input_movie = (None, title_var, int(year_var), float(reviewrating_var), info_var, int(runtime_var), int(censorrating_var))
+
+    #     try:
+    #         cursor.execute(sql_movie, sql_input_movie)
+    #     except:
+    #         print (cursor._last_executed)
+    #         raise
+    
+    #     connection123.commit()
+    #     lastrowid_movie = cursor.lastrowid
+    #     # print("lastrowid_movie = ", lastrowid_movie)
+        
+
+        
+        
+        
+    #     # INSERTING FREE TEXT WITH MN RELATIONSHIP
+    #     sql_actor = """
+    #         INSERT INTO `actor`(id, name)
+    #         VALUES (%s, %s);
+    #     """
+    #     sql_input_actor = (None, actor_var)
+
+    #     try:
+    #         cursor.execute(sql_actor, sql_input_actor)
+    #     except:
+    #         print (cursor._last_executed)
+    #         raise
+
+    #     connection123.commit()
+    #     lastrowid_actor = cursor.lastrowid
+    #     # print("lastrowid_actor = ", lastrowid_actor)
+        
+        
+    #     # WEAK ENTITY OF MOVIE_ACTOR TABLE, LINKING HERE
+    #     sql_movie_actor = """
+    #         INSERT INTO `movie_actor`(`id`, `movie_id`, `actor_id`)
+    #         VALUES (%s, %s, %s);
+    #     """
+    #     sql_input_movie_actor = (None, int(lastrowid_movie), int(lastrowid_actor))
+
+    #     try:
+    #         cursor.execute(sql_movie_actor, sql_input_movie_actor)
+    #     except:
+    #         print (cursor._last_executed)
+    #         raise
+        
+    #     connection123.commit()
+        
+        
+    #     # CENSORRATING. OPTION INPUT WITH 1-M RELATIONSHIP TO MOVIE.
+    #     # NO NEED TO INSERT TO TABLE BECOZ TABLE IS FIXED
+    #     # MOVIE TABLE UPDATED WITH INPUT FROM USER UNDER OPTION VALUE
+
+        
+    #     # GENRE. OPTION INPUT WITH MN RELATIONSHIP
+    #     # NO NEED TO INSERT TO TABLE BECOZ TABLE IS FIXED
+    #     # NEED TO LINK TO WEAK ENTITY TABLE
+    #     sql_censorrating = """
+    #         INSERT INTO `movie_genre`(`id`, `movie_id`, `genre_id`)
+    #         VALUES (%s,%s,%s);
+    #     """
+    #     sql_input_censorrating = (None, int(lastrowid_movie), int(genre_var))
+
+    #     try:
+    #         cursor.execute(sql_censorrating, sql_input_censorrating)
+    #     except:
+    #         print (cursor._last_executed)
+    #         raise
+        
+    #     connection123.commit()
+        
+        
+        
+
+        
+        
+    #     # LANGUAGE. OPTION INPUT WITH MN RELATIONSHIP
+    #     # NO NEED TO INSERT TO TABLE BECOZ TABLE IS FIXED
+    #     # NEED TO LINK TO WEAK ENTITY TABLE
+    #     sql_censorrating = """
+    #         INSERT INTO `movie_language`(`id`, `movie_id`, `language_id`)
+    #         VALUES (%s,%s,%s);
+    #     """
+    #     sql_input_censorrating = (None, int(lastrowid_movie), int(language_var))
+
+    #     try:
+    #         cursor.execute(sql_censorrating, sql_input_censorrating)
+    #     except:
+    #         print (cursor._last_executed)
+    #         raise
+        
+    #     connection123.commit()
+        
+
+        
+        
+    #     # CHARACTER. INSERTING FREE TEXT WITH MN RELATIONSHIP
+    #     # NEED TO LINK TO WEAK ENTITY TABLE
+    #     sql_character = """
+    #         INSERT INTO `character`(id, name)
+    #         VALUES (%s,%s);
+    #     """
+    #     sql_input_character = (None, character_var)
+
+    #     try:
+    #         cursor.execute(sql_character, sql_input_character)
+    #     except:
+    #         print (cursor._last_executed)
+    #         raise
+
+    #     connection123.commit()
+    #     lastrowid_character = cursor.lastrowid
+    #     # print("lastrowid_actor = ", lastrowid_actor)
+        
+        
+    #     # WEAK ENTITY OF MOVIE_CHARACTER TABLE, LINKING HERE
+    #     sql_movie_character = """
+    #         INSERT INTO `movie_character`(`id`, `movie_id`, `character_id`)
+    #         VALUES (%s, %s, %s);
+    #     """
+    #     sql_input_movie_character = (None, int(lastrowid_movie), int(lastrowid_character))
+
+    #     try:
+    #         cursor.execute(sql_movie_character, sql_input_movie_character)
+    #     except:
+    #         print (cursor._last_executed)
+    #         raise
+        
+    #     connection123.commit()
+        
+
+        
+    #     # PRODUCTIONCOMPANY. INSERTING FREE TEXT WITH MN RELATIONSHIP
+    #     # NEED TO LINK TO WEAK ENTITY TABLE
+    #     sql_productioncompany = """
+    #         INSERT INTO `productioncompany`(`id`, `name`)
+    #         VALUES (%s,%s);
+    #     """
+    #     sql_input_productioncompany = (None, productioncompany_var)
+
+    #     try:
+    #         cursor.execute(sql_productioncompany, sql_input_productioncompany)
+    #     except:
+    #         print (cursor._last_executed)
+    #         raise
+
+    #     connection123.commit()
+    #     lastrowid_productioncompany = cursor.lastrowid
+    #     # print("lastrowid_productioncompany = ", lastrowid_productioncompany)
+        
+
+
+
+    #     # WEAK ENTITY OF MOVIE_PRODUCTIONCOMPANY TABLE, LINKING HERE
+    #     sql_movie_productioncompany = """
+    #         INSERT INTO `movie_productioncompany`(`id`, `movie_id`, `productioncompany_id`)
+    #         VALUES (%s, %s, %s);
+    #     """
+    #     sql_input_movie_productioncompany = (None, int(lastrowid_movie), int(lastrowid_productioncompany))
+
+    #     try:
+    #         cursor.execute(sql_movie_productioncompany, sql_input_movie_productioncompany)
+    #     except:
+    #         print (cursor._last_executed)
+    #         raise
+        
+    #     connection123.commit()
+        
+    #     flash("Your Movie has been entered successfully! Thank you for populating CinemaTronix Database for the greater good! \U0001F44D ", "error")
+
+    #     # THIS SHOULD NOT BE AT THE LAST PART OF THE FUNCTION else unreacheable code
+    #     return redirect('/add')
+        
+
+
+
+
+
+sql_all_movies_data_withID = """
+    SELECT * 
+    FROM movie
+    
+    LEFT JOIN `movie_actor` ON `movie`.`id` = `movie_actor`.`movie_id`
+    LEFT JOIN `actor` ON `actor`.`id` = `movie_actor`.`actor_id`
+    
+    LEFT JOIN `movie_character` ON `movie`.`id` = `movie_character`.`movie_id` 
+    LEFT JOIN `character` ON `character`.`id` = `movie_character`.`character_id`
+    
+    LEFT JOIN `movie_genre` ON `movie`.`id` = `movie_genre`.`movie_id`
+    LEFT JOIN `genre` ON `genre`.`id` = `movie_genre`.`genre_id`
+    
+    LEFT JOIN `movie_language` ON `movie`.`id` = `movie_language`.`movie_id`
+    LEFT JOIN `language` ON `language`.`id` = `movie_language`.`language_id`
+    
+    LEFT JOIN `movie_productioncompany` ON `movie`.`id` = `movie_productioncompany`.`movie_id`
+    LEFT JOIN `productioncompany` ON `productioncompany`.`id` = `movie_productioncompany`.`productioncompany_id`
+    
+    LEFT JOIN `censorrating` ON `movie`.`censorrating` = `censorrating`.`id`
+    
+    LEFT JOIN `reviewrating` ON `movie`.`reviewrating` = `reviewrating`.`id`
+
+    LEFT JOIN `year` ON `movie`.`year` = `year`.`id`
+    
+    WHERE `movie`.`id` = 
+    """
+    
+    
+    
+    
+
+
+
+
         
 sql_all_movies_data = """
     SELECT * 
@@ -412,7 +712,9 @@ sql_all_movies_data = """
     LEFT JOIN `year` ON `movie`.`year` = `year`.`id`
 
     """
-    
+
+
+
 @app.route("/movies_admin")
 def movies_admin():
     cursor.execute(sql_all_movies_data)
