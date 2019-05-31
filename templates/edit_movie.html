@@ -18,8 +18,8 @@
             <label>Description info of movie : </label>
             <textarea name='input_name_info'  rows="8" cols="50">{{movie_fetchone_jinja.info}}</textarea>
         </div>
-
-        
+        CHECK : movie_fetchone_jinja["censorrating.id"] = {{ movie_fetchone_jinja["censorrating.id"] }} ------------ 
+        movie_fetchone_jinja["censorrating.censorrating"] = {{ movie_fetchone_jinja["censorrating.censorrating"] }}
         <div class="formtext">
             <label>Censor Rating* : </label>
             <select name='input_name_censorrating' required>

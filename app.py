@@ -389,6 +389,8 @@ def database_including_search():
 
 @app.route('/edit/<id>', methods=['GET', 'POST']) # id here same as table column name
 def edit_movie_including_search(id): # id here pass in from route parameter as argument, same as table column name
+    cursor.execute(sql_all_movies_data_withID + id) 
+    movie_fetchone_sql = cursor.fetchone()
     if request.method == 'GET':
         # if 'search_input_name' not in request.args:
             print("IF CONDITION")
@@ -419,9 +421,10 @@ def edit_movie_including_search(id): # id here pass in from route parameter as a
             
             
             # see below for sql_all_movies_data_withID sql statement. this is to execute the sql statement to join all tables using the id indirectly from route parameter which is pass into the sql statement using concatenation. + id here will be directly from function parameter.all tables because we need all info pertaining to this id to populate the edit fields.
-            cursor.execute(sql_all_movies_data_withID + id) 
+            # cursor.execute(sql_all_movies_data_withID + id) # moved to top so all conditions can use the movie_fetchone_sql
+            
             # this 2nd step is needed to fetch just the movie data from the id
-            movie_fetchone_sql = cursor.fetchone()
+            # movie_fetchone_sql = cursor.fetchone() # moved to top so all conditions can use the movie_fetchone_sql
             print("movie_fetchone_sql = ", movie_fetchone_sql)
             
             # id here pass in from FUNCTION parameter as argument, same as table column name
@@ -488,13 +491,13 @@ def edit_movie_including_search(id): # id here pass in from route parameter as a
             raise
     
         connection123.commit()
-        lastrowid_movie = cursor.lastrowid
-        # print("lastrowid_movie = ", lastrowid_movie)
+        # lastrowid_movie = cursor.lastrowid # previously use for add. can't use for editing, use the route parameter which we put in the ID of movie. change to the table column name
+        # print("lastrowid_movie = ", lastrowid_movie) 
         
 
+        print("update movie = done")
         
-        
-        
+        # EDITING FREE TEXT. IDs don't change but name change. no need update weak entity.
         # INSERTING FREE TEXT WITH MN RELATIONSHIP
         sql_actor = """
             UPDATE `actor`
@@ -502,44 +505,49 @@ def edit_movie_including_search(id): # id here pass in from route parameter as a
             SET 
             name = %s
             
-            WHERE `movie`.`id` = 
+            WHERE `id` = 
         """
         sql_input_actor = (actor_var)
+        
+        actor_id_var = movie_fetchone_sql["actor_id"]
+        print("actor_id = ", actor_id_var)
 
         try:
-            cursor.execute(sql_actor + id, sql_input_actor)
+            cursor.execute(sql_actor + str(actor_id_var), sql_input_actor) # got error TypeError: Can't convert 'int' object to str implicitly. so need to concat string with string, so convert the number to string
         except:
             print (cursor._last_executed)
             raise
 
         connection123.commit()
-        lastrowid_actor = cursor.lastrowid
+        # lastrowid_actor = cursor.lastrowid # previously use for add. can't use for editing, use the movie_fetchone_sql to access the actor id and connect with the movie ID that we pass in route parameter to change the data in database.
         # print("lastrowid_actor = ", lastrowid_actor)
         
+        print("update actor = done")
         
-        # WEAK ENTITY OF MOVIE_ACTOR TABLE, LINKING HERE
-        sql_movie_actor = """
-            INSERT INTO `movie_actor`(`id`, `movie_id`, `actor_id`)
-            VALUES (%s, %s, %s);
-            INSERT INTO `actor`(id, name)
-            VALUES (%s, %s);
-            UPDATE `actor`
+        
+        
+        #for editing, no need update this weak entity. the ids linking each other don't change for this case because the actor name field is not unique. when an actor is created, a new id is given. we are changing the text in other field.
+        # WEAK ENTITY OF MOVIE_ACTOR TABLE, LINKING HERE 
+        # sql_movie_actor = """
+        #     UPDATE `movie_actor`
             
-            SET 
-            `movie_id` = %s,
-            `actor_id` = %s
+        #     SET 
+        #     `movie_id` = %s,
+        #     `actor_id` = %s
             
-            WHERE `movie`.`id` = 
-        """
-        sql_input_movie_actor = (None, int(lastrowid_movie), int(lastrowid_actor))
+        #     WHERE `movie`.`id` = 
+        # """
+        # sql_input_movie_actor = (int(id), int(actor_id_var))
 
-        try:
-            cursor.execute(sql_movie_actor + id, sql_input_movie_actor)
-        except:
-            print (cursor._last_executed)
-            raise
+        # try:
+        #     cursor.execute(sql_movie_actor + id, sql_input_movie_actor)
+        # except:
+        #     print (cursor._last_executed)
+        #     raise
         
-        connection123.commit()
+        # connection123.commit()
+        
+        print("weak entity movie_actor no need update. ids don't change")
         
         
         # CENSORRATING. OPTION INPUT WITH 1-M RELATIONSHIP TO MOVIE.
@@ -547,14 +555,19 @@ def edit_movie_including_search(id): # id here pass in from route parameter as a
         # MOVIE TABLE UPDATED WITH INPUT FROM USER UNDER OPTION VALUE
 
         
+        #for editing, need to update this weak entity because while movie id don't change, the user can change the genre. in the genre table, the value of the data is the id itself. genre only has 6 fixed data and itself is ID since the values are unique. hence need to change the id according to the changed choice.
         # GENRE. OPTION INPUT WITH MN RELATIONSHIP
         # NO NEED TO INSERT TO TABLE BECOZ TABLE IS FIXED
         # NEED TO LINK TO WEAK ENTITY TABLE
         sql_censorrating = """
-            INSERT INTO `movie_genre`(`id`, `movie_id`, `genre_id`)
-            VALUES (%s,%s,%s);
+            UPDATE `movie_genre`
+            
+            SET 
+            `genre_id` = %s
+            
+            WHERE `movie_id` = 
         """
-        sql_input_censorrating = (None, int(lastrowid_movie), int(genre_var))
+        sql_input_censorrating = (int(genre_var))
 
         try:
             cursor.execute(sql_censorrating + id, sql_input_censorrating)
@@ -564,19 +577,23 @@ def edit_movie_including_search(id): # id here pass in from route parameter as a
         
         connection123.commit()
         
-        
+        print("update movie_genre = done")
         
 
         
-        
+        #for editing, need to update this weak entity because while movie id don't change, the user can change the language. language has fixed id and cannot be created (so no new id assigned). hence it is fixed data since the values are unique. hence need to change the id according to the changed choice.
         # LANGUAGE. OPTION INPUT WITH MN RELATIONSHIP
         # NO NEED TO INSERT TO TABLE BECOZ TABLE IS FIXED
         # NEED TO LINK TO WEAK ENTITY TABLE
         sql_censorrating = """
-            INSERT INTO `movie_language`(`id`, `movie_id`, `language_id`)
-            VALUES (%s,%s,%s);
+            UPDATE `movie_language`
+            
+            SET 
+            `language_id` = %s
+            
+            WHERE `movie_id` = 
         """
-        sql_input_censorrating = (None, int(lastrowid_movie), int(language_var))
+        sql_input_censorrating = (int(language_var))
 
         try:
             cursor.execute(sql_censorrating + id, sql_input_censorrating)
@@ -586,72 +603,103 @@ def edit_movie_including_search(id): # id here pass in from route parameter as a
         
         connection123.commit()
         
-
+        print("update movie_language = done")
         
         
+        # EDITING FREE TEXT. IDs don't change but name change. no need update weak entity.
         # CHARACTER. INSERTING FREE TEXT WITH MN RELATIONSHIP
         # NEED TO LINK TO WEAK ENTITY TABLE
         sql_character = """
-            INSERT INTO `character`(id, name)
-            VALUES (%s,%s);
+            UPDATE `character`
+            
+            SET 
+            `name` = %s
+            
+            WHERE `id` = 
         """
-        sql_input_character = (None, character_var)
+        sql_input_character = (character_var)
 
+        character_id_var = movie_fetchone_sql["character_id"]
+        print("character_id_var = ", character_id_var)
+        
         try:
-            cursor.execute(sql_character + id, sql_input_character)
+            cursor.execute(sql_character + str(character_id_var), sql_input_character) # got error TypeError: Can't convert 'int' object to str implicitly. so need to concat string with string, so convert the number to string
         except:
             print (cursor._last_executed)
             raise
 
         connection123.commit()
-        lastrowid_character = cursor.lastrowid
+        # lastrowid_character = cursor.lastrowid # previously use for add. can't use for editing, use the movie_fetchone_sql to access the actor id and connect with the movie ID that we pass in route parameter to change the data in database.
         # print("lastrowid_actor = ", lastrowid_actor)
-        
-        
+
+        print("update character = done")
+
+
+        #for editing, no need update this weak entity. the ids linking each other don't change for this case because the character name field is not unique. when a character is created, a new id is given. we are changing the text in other field.
         # WEAK ENTITY OF MOVIE_CHARACTER TABLE, LINKING HERE
-        sql_movie_character = """
-            INSERT INTO `movie_character`(`id`, `movie_id`, `character_id`)
-            VALUES (%s, %s, %s);
-        """
-        sql_input_movie_character = (None, int(lastrowid_movie), int(lastrowid_character))
+        # sql_movie_character = """
+        #     UPDATE `movie_character`
+            
+        #     SET 
+        #     `character_id` = %s
+            
+        #     WHERE `movie_id` = 
+        # """
+        # sql_input_movie_character = (int(id), int(lastrowid_character))
 
-        try:
-            cursor.execute(sql_movie_character + id, sql_input_movie_character)
-        except:
-            print (cursor._last_executed)
-            raise
+        # try:
+        #     cursor.execute(sql_movie_character + id, sql_input_movie_character)
+        # except:
+        #     print (cursor._last_executed)
+        #     raise
         
-        connection123.commit()
+        # connection123.commit()
         
-
+        print("weak entity movie_character no need update. ids don't change")
         
+        
+        
+        # EDITING FREE TEXT. IDs don't change but name change. no need update weak entity.
         # PRODUCTIONCOMPANY. INSERTING FREE TEXT WITH MN RELATIONSHIP
         # NEED TO LINK TO WEAK ENTITY TABLE
         sql_productioncompany = """
-            INSERT INTO `productioncompany`(`id`, `name`)
-            VALUES (%s,%s);
+            UPDATE `productioncompany`
+            
+            SET 
+            `name` = %s,
+            
+            WHERE `id` = 
         """
-        sql_input_productioncompany = (None, productioncompany_var)
+        sql_input_productioncompany = (productioncompany_var)
+
+        productioncompany_id_var = movie_fetchone_sql["productioncompany_id"]
+        print("productioncompany_id_var = ", productioncompany_id_var)
 
         try:
-            cursor.execute(sql_productioncompany + id, sql_input_productioncompany)
+            cursor.execute(sql_productioncompany + str(productioncompany_id_var), sql_input_productioncompany) # got error TypeError: Can't convert 'int' object to str implicitly. so need to concat string with string, so convert the number to string
         except:
             print (cursor._last_executed)
             raise
 
         connection123.commit()
-        lastrowid_productioncompany = cursor.lastrowid
+        # lastrowid_productioncompany = cursor.lastrowid # previously use for add. can't use for editing, use the movie_fetchone_sql to access the actor id and connect with the movie ID that we pass in route parameter to change the data in database.
         # print("lastrowid_productioncompany = ", lastrowid_productioncompany)
         
+        print("update productioncompany = done")
 
 
-
+        #for editing, no need update this weak entity. the ids linking each other don't change for this case because the character name field is not unique. when a character is created, a new id is given. we are changing the text in other field.
         # WEAK ENTITY OF MOVIE_PRODUCTIONCOMPANY TABLE, LINKING HERE
         sql_movie_productioncompany = """
-            INSERT INTO `movie_productioncompany`(`id`, `movie_id`, `productioncompany_id`)
-            VALUES (%s, %s, %s);
+            UPDATE `movie_productioncompany`
+            
+            SET 
+            `movie_id` = %s,
+            `productioncompany_id` = %s,
+            
+            WHERE `movie`.`id` = 
         """
-        sql_input_movie_productioncompany = (None, int(lastrowid_movie), int(lastrowid_productioncompany))
+        sql_input_movie_productioncompany = (int(lastrowid_movie), int(lastrowid_productioncompany))
 
         try:
             cursor.execute(sql_movie_productioncompany + id, sql_input_movie_productioncompany)
