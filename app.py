@@ -2,8 +2,8 @@ from flask import Flask
 from flask import request
 from flask import render_template
 from flask import redirect
-
 from flask import flash
+from flask import Markup
 
 import numpy
 from imdb import IMDb
@@ -321,7 +321,7 @@ def addpage_including_search():
         
         connection123.commit()
         
-        flash("Your Movie has been entered successfully! Thank you for populating CinemaTronix Database for the greater good! \U0001F44D ", "error")
+        flash("Your Movie has been entered successfully! Thank you for populating CinemaTronix Database for the greater good! \U0001F44D ", "info")
 
         # THIS SHOULD NOT BE AT THE LAST PART OF THE FUNCTION else unreacheable code
         return redirect('/add')
@@ -329,6 +329,35 @@ def addpage_including_search():
 
 
 
+
+
+sql_all_movies_data = """
+    SELECT * 
+    FROM movie
+    
+    LEFT JOIN `movie_actor` ON `movie`.`id` = `movie_actor`.`movie_id`
+    LEFT JOIN `actor` ON `actor`.`id` = `movie_actor`.`actor_id`
+    
+    LEFT JOIN `movie_character` ON `movie`.`id` = `movie_character`.`movie_id` 
+    LEFT JOIN `character` ON `character`.`id` = `movie_character`.`character_id`
+    
+    LEFT JOIN `movie_genre` ON `movie`.`id` = `movie_genre`.`movie_id`
+    LEFT JOIN `genre` ON `genre`.`id` = `movie_genre`.`genre_id`
+    
+    LEFT JOIN `movie_language` ON `movie`.`id` = `movie_language`.`movie_id`
+    LEFT JOIN `language` ON `language`.`id` = `movie_language`.`language_id`
+    
+    LEFT JOIN `movie_productioncompany` ON `movie`.`id` = `movie_productioncompany`.`movie_id`
+    LEFT JOIN `productioncompany` ON `productioncompany`.`id` = `movie_productioncompany`.`productioncompany_id`
+    
+    LEFT JOIN `censorrating` ON `movie`.`censorrating` = `censorrating`.`id`
+    
+    LEFT JOIN `reviewrating` ON `movie`.`reviewrating` = `reviewrating`.`id`
+
+    LEFT JOIN `year` ON `movie`.`year` = `year`.`id`
+
+    """
+    
 @app.route('/database')
 def database_including_search():
     if 'search_input_name' not in request.args:
@@ -387,10 +416,44 @@ def database_including_search():
 
 
 
+
+
+
+sql_all_movies_data_withID = """
+    SELECT * 
+    FROM movie
+    
+    LEFT JOIN `movie_actor` ON `movie`.`id` = `movie_actor`.`movie_id`
+    LEFT JOIN `actor` ON `actor`.`id` = `movie_actor`.`actor_id`
+    
+    LEFT JOIN `movie_character` ON `movie`.`id` = `movie_character`.`movie_id` 
+    LEFT JOIN `character` ON `character`.`id` = `movie_character`.`character_id`
+    
+    LEFT JOIN `movie_genre` ON `movie`.`id` = `movie_genre`.`movie_id`
+    LEFT JOIN `genre` ON `genre`.`id` = `movie_genre`.`genre_id`
+    
+    LEFT JOIN `movie_language` ON `movie`.`id` = `movie_language`.`movie_id`
+    LEFT JOIN `language` ON `language`.`id` = `movie_language`.`language_id`
+    
+    LEFT JOIN `movie_productioncompany` ON `movie`.`id` = `movie_productioncompany`.`movie_id`
+    LEFT JOIN `productioncompany` ON `productioncompany`.`id` = `movie_productioncompany`.`productioncompany_id`
+    
+    LEFT JOIN `censorrating` ON `movie`.`censorrating` = `censorrating`.`id`
+    
+    LEFT JOIN `reviewrating` ON `movie`.`reviewrating` = `reviewrating`.`id`
+
+    LEFT JOIN `year` ON `movie`.`year` = `year`.`id`
+    
+    WHERE `movie`.`id` = 
+    """
+    # to concat `movie`.`id` using python. that's why it's left blank
+
 @app.route('/edit/<id>', methods=['GET', 'POST']) # id here same as table column name
 def edit_movie_including_search(id): # id here pass in from route parameter as argument, same as table column name
     cursor.execute(sql_all_movies_data_withID + id) 
     movie_fetchone_sql = cursor.fetchone()
+    print("movie_fetchone_sql = ", movie_fetchone_sql)
+    
     if request.method == 'GET':
         # if 'search_input_name' not in request.args:
             print("IF CONDITION")
@@ -425,7 +488,7 @@ def edit_movie_including_search(id): # id here pass in from route parameter as a
             
             # this 2nd step is needed to fetch just the movie data from the id
             # movie_fetchone_sql = cursor.fetchone() # moved to top so all conditions can use the movie_fetchone_sql
-            print("movie_fetchone_sql = ", movie_fetchone_sql)
+
             
             # id here pass in from FUNCTION parameter as argument, same as table column name
             return render_template('edit_movie.html', 
@@ -666,7 +729,7 @@ def edit_movie_including_search(id): # id here pass in from route parameter as a
             UPDATE `productioncompany`
             
             SET 
-            `name` = %s,
+            `name` = %s
             
             WHERE `id` = 
         """
@@ -690,63 +753,40 @@ def edit_movie_including_search(id): # id here pass in from route parameter as a
 
         #for editing, no need update this weak entity. the ids linking each other don't change for this case because the character name field is not unique. when a character is created, a new id is given. we are changing the text in other field.
         # WEAK ENTITY OF MOVIE_PRODUCTIONCOMPANY TABLE, LINKING HERE
-        sql_movie_productioncompany = """
-            UPDATE `movie_productioncompany`
+        # sql_movie_productioncompany = """
+        #     UPDATE `movie_productioncompany`
             
-            SET 
-            `movie_id` = %s,
-            `productioncompany_id` = %s,
+        #     SET 
+        #     `movie_id` = %s,
+        #     `productioncompany_id` = %s,
             
-            WHERE `movie`.`id` = 
-        """
-        sql_input_movie_productioncompany = (int(lastrowid_movie), int(lastrowid_productioncompany))
+        #     WHERE `movie`.`id` = 
+        # """
+        # sql_input_movie_productioncompany = (int(lastrowid_movie), int(lastrowid_productioncompany))
 
-        try:
-            cursor.execute(sql_movie_productioncompany + id, sql_input_movie_productioncompany)
-        except:
-            print (cursor._last_executed)
-            raise
+        # try:
+        #     cursor.execute(sql_movie_productioncompany + id, sql_input_movie_productioncompany)
+        # except:
+        #     print (cursor._last_executed)
+        #     raise
         
-        connection123.commit()
+        # connection123.commit()
         
-        flash("Your Movie has been entered successfully! Thank you for populating CinemaTronix Database for the greater good! \U0001F44D ", "error")
+        print("weak entity movie_productioncompany no need update. ids don't change")
+        
+        flash_msg_edit_success = Markup("Your Movie has been altered successfully! To view the updated info, do a search or view from the full database.<br><br>Thank you for keeping CinemaTronix Database updated correctly (hopefully) for the good of moviebuff-kind! \U0001F44D ")
+        
+        flash(flash_msg_edit_success, "info")
 
         # THIS SHOULD NOT BE AT THE LAST PART OF THE FUNCTION else unreacheable code
-        return redirect('/add')
+        return redirect('/edit/%s' % id)
         
 
 
 
 
 
-sql_all_movies_data_withID = """
-    SELECT * 
-    FROM movie
-    
-    LEFT JOIN `movie_actor` ON `movie`.`id` = `movie_actor`.`movie_id`
-    LEFT JOIN `actor` ON `actor`.`id` = `movie_actor`.`actor_id`
-    
-    LEFT JOIN `movie_character` ON `movie`.`id` = `movie_character`.`movie_id` 
-    LEFT JOIN `character` ON `character`.`id` = `movie_character`.`character_id`
-    
-    LEFT JOIN `movie_genre` ON `movie`.`id` = `movie_genre`.`movie_id`
-    LEFT JOIN `genre` ON `genre`.`id` = `movie_genre`.`genre_id`
-    
-    LEFT JOIN `movie_language` ON `movie`.`id` = `movie_language`.`movie_id`
-    LEFT JOIN `language` ON `language`.`id` = `movie_language`.`language_id`
-    
-    LEFT JOIN `movie_productioncompany` ON `movie`.`id` = `movie_productioncompany`.`movie_id`
-    LEFT JOIN `productioncompany` ON `productioncompany`.`id` = `movie_productioncompany`.`productioncompany_id`
-    
-    LEFT JOIN `censorrating` ON `movie`.`censorrating` = `censorrating`.`id`
-    
-    LEFT JOIN `reviewrating` ON `movie`.`reviewrating` = `reviewrating`.`id`
 
-    LEFT JOIN `year` ON `movie`.`year` = `year`.`id`
-    
-    WHERE `movie`.`id` = 
-    """
-    # to concat id using python
     
     
     
@@ -755,32 +795,7 @@ sql_all_movies_data_withID = """
 
 
         
-sql_all_movies_data = """
-    SELECT * 
-    FROM movie
-    
-    LEFT JOIN `movie_actor` ON `movie`.`id` = `movie_actor`.`movie_id`
-    LEFT JOIN `actor` ON `actor`.`id` = `movie_actor`.`actor_id`
-    
-    LEFT JOIN `movie_character` ON `movie`.`id` = `movie_character`.`movie_id` 
-    LEFT JOIN `character` ON `character`.`id` = `movie_character`.`character_id`
-    
-    LEFT JOIN `movie_genre` ON `movie`.`id` = `movie_genre`.`movie_id`
-    LEFT JOIN `genre` ON `genre`.`id` = `movie_genre`.`genre_id`
-    
-    LEFT JOIN `movie_language` ON `movie`.`id` = `movie_language`.`movie_id`
-    LEFT JOIN `language` ON `language`.`id` = `movie_language`.`language_id`
-    
-    LEFT JOIN `movie_productioncompany` ON `movie`.`id` = `movie_productioncompany`.`movie_id`
-    LEFT JOIN `productioncompany` ON `productioncompany`.`id` = `movie_productioncompany`.`productioncompany_id`
-    
-    LEFT JOIN `censorrating` ON `movie`.`censorrating` = `censorrating`.`id`
-    
-    LEFT JOIN `reviewrating` ON `movie`.`reviewrating` = `reviewrating`.`id`
 
-    LEFT JOIN `year` ON `movie`.`year` = `year`.`id`
-
-    """
 
 
 

@@ -10,21 +10,25 @@
   <thead class="thead-dark">
     <tr>
       <!--class="sort-by"-->
-      <th scope="col">#</th>
-      <th scope="col">Movie Id</th>
-      <th scope="col">Movie Title</th>
-      <th scope="col">Genre Id</th>
-      <th scope="col">Genre</th>
-      <th scope="col">Year</th>
-      <th scope="col">Review Rating</th>
-      <th scope="col">Language</th>
-      <th scope="col">Info</th>
-      <th scope="col">Actor Id</th>
-      <th scope="col">Actor Name</th>
-      <th scope="col">Character Name</th>
-      <th scope="col">Runtime</th>
-      <th scope="col">Censor Rating</th>
-      <th scope="col">Production Company</th>
+      <th class="th_sort" scope="col">#</th>
+      <th class="th_sort" scope="col">Movie Id</th>
+      <th class="th_sort" scope="col">Movie Title</th>
+      <th class="th_sort" scope="col">Genre Id</th>
+      <th class="th_sort" scope="col">Genre</th>
+      <th class="th_sort" scope="col">Year</th>
+      <th class="th_sort" scope="col">Review Rating</th>
+      <th class="th_sort" scope="col">Language</th>
+      <th class="th_sort" scope="col">Info</th>
+      <th class="th_sort" scope="col">Actor Id</th>
+      <th class="th_sort" scope="col">Actor Name</th>
+      <th class="th_sort" scope="col">Character Id</th>
+      <th class="th_sort" scope="col">Character Name</th>
+      <th class="th_sort" scope="col">Runtime</th>
+      <th class="th_sort" scope="col">Censor Rating</th>
+      <th class="th_sort" scope="col">Production Company Id</th>
+      <th class="th_sort" scope="col">Production Company</th>
+      <th scope="col">Edit Movie</th>
+      <th scope="col">Delete Movie</th>
 
       
     </tr>
@@ -43,10 +47,14 @@
       <td>{{ i.info }}</td>
       <td>{{ i["actor.id"] }}</td>
       <td>{{ i.name }}</td>
+      <td>{{ i["character.id"] }}</td>
       <td>{{ i["character.name"] }}</td>
       <td>{{ i.runtime }}</td>
       <td>{{ i["censorrating.censorrating"] }}</td>
+      <td>{{ i["productioncompany.id"] }}</td>
       <td>{{ i["productioncompany.name"] }}</td>
+      <td><a href="/edit/{{ i.id }}" class="btn btn-outline-warning">Edit</a></td> <!--id here same as table column name-->
+      <td><a href="/delete/{{ i.id }}" class="btn btn-outline-danger">Delete</a></td> <!--id here same as table column name-->
     </tr>
     {% endfor %}
   </tbody>

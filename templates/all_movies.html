@@ -25,6 +25,7 @@
       <th class="th_sort" scope="col">Character Name</th>
       <th class="th_sort" scope="col">Runtime</th>
       <th class="th_sort" scope="col">Censor Rating</th>
+      <th class="th_sort" scope="col">Production Company Id</th>
       <th class="th_sort" scope="col">Production Company</th>
       <th scope="col">Edit Movie</th>
       <th scope="col">Delete Movie</th>
@@ -49,6 +50,7 @@
       <td>{{ i["character.name"] }}</td>
       <td>{{ i.runtime }}</td>
       <td>{{ i["censorrating.censorrating"] }}</td>
+      <td>{{ i["productioncompany.id"] }}</td>
       <td>{{ i["productioncompany.name"] }}</td>
       <td><a href="/edit/{{ i.id }}" class="btn btn-outline-warning">Edit</a></td> <!--id here same as table column name-->
       <td><a href="/delete/{{ i.id }}" class="btn btn-outline-danger">Delete</a></td> <!--id here same as table column name-->
