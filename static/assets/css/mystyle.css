@@ -45,7 +45,7 @@ margin: 10px 0;
 .clear { clear: both; }
 
 ::selection {
-background: red;
+background: #EFD8FF;
 /*color: #000;*/
 /*text-shadow: none;*/
 }
