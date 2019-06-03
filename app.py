@@ -424,7 +424,7 @@ def edit_movie_including_search(id): # id here pass in from route parameter as a
     print("movie_fetchone_sql = ", movie_fetchone_sql)
     
     if request.method == 'GET':
-        # if 'search_input_name' not in request.args:
+        if 'search_input_name' not in request.args:
             print("IF CONDITION")
             print("id from route = ", id)
             
@@ -469,17 +469,17 @@ def edit_movie_including_search(id): # id here pass in from route parameter as a
             )
             
             
-        # else:
-        #     search_for = "%" + request.args['search_input_name'] + "%"
-        #     print("ELSE CONDITION : search_for = ", search_for)
+        else:
+            search_for = "%" + request.args['search_input_name'] + "%"
+            print("ELSE CONDITION : search_for = ", search_for)
             
-        #     # print("sql_query_all_tables_joined = ", sql_query_all_tables_joined)
-        #     cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
-        #     # print("cursor_executed = ", cursor_executed)
-        #     movies_var = cursor.fetchall()
-        #     print("movies_var = ", movies_var)
-        #     return render_template('search_results.html', 
-        #     all_movies_jinja = movies_var)
+            # print("sql_query_all_tables_joined = ", sql_query_all_tables_joined)
+            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
+            # print("cursor_executed = ", cursor_executed)
+            movies_var = cursor.fetchall()
+            print("movies_var = ", movies_var)
+            return render_template('search_results.html', 
+            all_movies_jinja = movies_var)
             
         
 
@@ -787,7 +787,7 @@ def delete_movie_including_search(id):
     print("movie_fetchone_sql = ", movie_fetchone_sql)
     
     if request.method == 'GET':
-        # if 'search_input_name' not in request.args:
+        if 'search_input_name' not in request.args:
             print("IF CONDITION")
             print("id from route = ", id)
             
@@ -810,6 +810,20 @@ def delete_movie_including_search(id):
             movie_id_jinja = id,
             movie_fetchone_jinja = movie_fetchone_sql,
             )
+        
+        
+        else:
+            search_for = "%" + request.args['search_input_name'] + "%"
+            print("ELSE CONDITION : search_for = ", search_for)
+            
+            # print("sql_query_all_tables_joined = ", sql_query_all_tables_joined)
+            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
+            # print("cursor_executed = ", cursor_executed)
+            movies_var = cursor.fetchall()
+            print("movies_var = ", movies_var)
+            return render_template('search_results.html', 
+            all_movies_jinja = movies_var)
+            
             
             
     else:
@@ -817,6 +831,19 @@ def delete_movie_including_search(id):
         print("movie_fetchone_sql['actor.id'] = ", movie_fetchone_sql['actor.id'])
         print("movie_fetchone_sql['character.id'] = ",movie_fetchone_sql['character.id'])
         print("movie_fetchone_sql['productioncompany.id'] = ",movie_fetchone_sql['productioncompany.id'])
+        title_var = request.form['input_name_title']
+        runtime_var = request.form['input_name_runtime']
+        info_var = request.form['input_name_info']
+        year_var = request.form['input_name_year']
+        reviewrating_var = request.form['input_name_reviewrating']
+        censorrating_var = request.form['input_name_censorrating']
+        # print("censorrating_var = ", censorrating_var)
+        genre_var = request.form['input_name_genre']
+        language_var = request.form['input_name_language']
+        actor_var = request.form['input_name_actor']
+        character_var = request.form['input_name_character']
+        productioncompany_var = request.form['input_name_productioncompany']
+        
         
         # delete movie. will cascade to weak entities of movie relations with tables of
         # actor, character, productioncompany, language, year, reviewrating, censorrating

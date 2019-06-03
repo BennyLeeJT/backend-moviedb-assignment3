@@ -51,15 +51,16 @@ background: #EFD8FF;
 }
 
 
-#deletepage_div_row 
+.deletepage_div_row 
 {
-  display: flex;
-
+  
+  
 }
 
-#deletepage_div_column 
+.deletepage_div_column 
 {
-  /*flex: 50%;*/
+  /*flex: 20%;*/
+  display: inline-block;
   min-width: 198.266px;  
 }
 
