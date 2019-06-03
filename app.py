@@ -382,37 +382,6 @@ def database_including_search():
         # print("movies_var = ", movies_var)
         return render_template('search_results.html', 
         all_movies_jinja = movies_var)
-        
-        
-
-# @app.route('/edit/<todo_id>', methods=['GET', 'POST'])
-# def edit_to_do(todo_id):
-#     if request.method == 'GET':
-        
-#         cursor = pymysql.cursors.DictCursor(conn)
-#         cursor.execute('SELECT * from categories')
-#         categories = cursor.fetchall()
-        
-#         cursor.execute("SELECT * FROM todos WHERE todo_id = " + todo_id)
-#         td = cursor.fetchone()
-#         return render_template('edit.html', todo=td,
-#                 id=todo_id,all_categories = categories)
-#     else:
-#         name = request.form['todo']
-#         comments = request.form['comments']
-#         category_id = request.form['category']
-#         sql = """
-#             UPDATE todos SET name = "{}", 
-#                 comments = "{}",
-#                 category_id = "{}"
-#             WHERE todo_id = {}
-#         """.format(name, comments, category_id, todo_id)
-#         cursor = pymysql.cursors.DictCursor(conn)
-#         cursor.execute(sql)
-#         conn.commit()
-#         cursor.close();
-#         return redirect('/')
-        
 
 
 
@@ -643,6 +612,7 @@ def edit_movie_including_search(id): # id here pass in from route parameter as a
         print("update movie_genre = done")
         
 
+        # Language table need not update because it is the id and langauge, fixed values, for user selection. change the movie_language table instead.
         
         #for editing, need to update this weak entity because while movie id don't change, the user can change the language. language has fixed id and cannot be created (so no new id assigned). hence it is fixed data since the values are unique. hence need to change the id according to the changed choice.
         # LANGUAGE. OPTION INPUT WITH MN RELATIONSHIP
@@ -810,6 +780,125 @@ def movies_admin():
 
 
 
+@app.route("/delete/<id>", methods=['GET', 'POST'])
+def delete_movie_including_search(id):
+    cursor.execute(sql_all_movies_data_withID + id) 
+    movie_fetchone_sql = cursor.fetchone()
+    print("movie_fetchone_sql = ", movie_fetchone_sql)
+    
+    if request.method == 'GET':
+        # if 'search_input_name' not in request.args:
+            print("IF CONDITION")
+            print("id from route = ", id)
+            
+            cursor.execute('SELECT * from language')
+            language_var = cursor.fetchall()
+            # print("language_var = ", language_var)
+            
+            cursor.execute('SELECT * from genre')
+            genre_var = cursor.fetchall()
+            # print("genre_var = ", genre_var)
+            
+            cursor.execute("SELECT * from censorrating")
+            censorrating_var = cursor.fetchall()
+            # print("censorrating_var = ", censorrating_var)
+            
+            return render_template('delete_movie.html', 
+            all_languages_jinja = language_var, 
+            all_genres_jinja = genre_var,
+            all_censorratings_jinja = censorrating_var,
+            movie_id_jinja = id,
+            movie_fetchone_jinja = movie_fetchone_sql,
+            )
+            
+            
+    else:
+        print("request.form = ", request.form)
+        print("movie_fetchone_sql['actor.id'] = ", movie_fetchone_sql['actor.id'])
+        print("movie_fetchone_sql['character.id'] = ",movie_fetchone_sql['character.id'])
+        print("movie_fetchone_sql['productioncompany.id'] = ",movie_fetchone_sql['productioncompany.id'])
+        
+        # delete movie. will cascade to weak entities of movie relations with tables of
+        # actor, character, productioncompany, language, year, reviewrating, censorrating
+        sql_delete_movie = "DELETE FROM `movie` WHERE `id` = %s;"
+        
+        sql_input_delete = int(id)
+        
+        try:
+            cursor.execute(sql_delete_movie, sql_input_delete)
+        except:
+            print (cursor._last_executed)
+            raise
+        
+        connection123.commit()
+        
+        print("delete movie = done")
+        
+        
+        
+        # delete actor
+        sql_delete_actor = "DELETE FROM `actor` WHERE `id` = %s;"
+        
+        sql_input_delete = int(movie_fetchone_sql['actor.id'])
+        
+        try:
+            cursor.execute(sql_delete_actor, sql_input_delete)
+        except:
+            print (cursor._last_executed)
+            raise
+        
+        connection123.commit()
+        
+        print("delete actor = done")
+        
+        
+        
+        # delete character
+        sql_delete_character = "DELETE FROM `character` WHERE `id` = %s;"
+        
+        sql_input_delete = int(movie_fetchone_sql['character.id'])
+        
+        try:
+            cursor.execute(sql_delete_character, sql_input_delete)
+        except:
+            print (cursor._last_executed)
+            raise
+        
+        connection123.commit()
+        
+        print("delete character = done")
+        
+        
+        
+        # delete productioncompany
+        sql_delete_productioncompany = "DELETE FROM `productioncompany` WHERE `id` = %s;"
+        
+        sql_input_delete = int(movie_fetchone_sql['productioncompany.id'])
+        
+        try:
+            cursor.execute(sql_delete_productioncompany, sql_input_delete)
+        except:
+            print (cursor._last_executed)
+            raise
+        
+        connection123.commit()
+        
+        print("delete productioncompany = done")
+        
+        
+        
+        
+        flash_msg_delete_success = Markup("Movie has been deleted successfully! To view the updated database, go to Full Database.<br><br>Thank you for keeping CinemaTronix Database clean & tidy. Marie Kondo would be proud! \U0001F44D ")
+        
+        flash(flash_msg_delete_success, "info")
+        
+        
+        return redirect('/delete/%s' % id)
+        # return redirect("/delete_movie.html")
+    
+    
+    
+
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
@@ -817,25 +906,25 @@ if __name__ == "__main__":
             debug=True)
             
 
-        # INSERT INTO `movie`(`id`, `title`, `runtime`, `info`, `year`, `reviewrating`, `censorrating`)
-        # VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7])
-        # `id`, id, NULL, genre_var, language_var, actor_var, character_var, productioncompany_var
-        
-        # sql = """
-        #     INSERT INTO movie (`title`, `runtime`, `info`, `year`, `reviewrating`, `censorrating`)
-        #     VALUES ("{}", {}, "{}", {}, {}, "{}");
-            
-        # """.format(title_var, runtime_var, info_var, year_var, reviewrating_var, censorrating_var)
-        # SET @last_id_in_actor = LAST_INSERT_ID();
-        # SET @last_id_in_movie = LAST_INSERT_ID();
-        
-        # INSERT INTO `movie_actor` (`movie_id`, `actor_id`)
-        # VALUES (@last_id_in_movie, @last_id_in_actor)
-            # SET @last_id_in_movie = LAST_INSERT_ID();
-            # SET @last_id_in_actor = LAST_INSERT_ID();
-            
-            # INSERT INTO `movie_actor` (`movie_id`, `actor_id`)
-            # VALUES (@last_id_in_movie, @last_id_in_actor)
+# INSERT INTO `movie`(`id`, `title`, `runtime`, `info`, `year`, `reviewrating`, `censorrating`)
+# VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7])
+# `id`, id, NULL, genre_var, language_var, actor_var, character_var, productioncompany_var
+
+# sql = """
+#     INSERT INTO movie (`title`, `runtime`, `info`, `year`, `reviewrating`, `censorrating`)
+#     VALUES ("{}", {}, "{}", {}, {}, "{}");
+    
+# """.format(title_var, runtime_var, info_var, year_var, reviewrating_var, censorrating_var)
+# SET @last_id_in_actor = LAST_INSERT_ID();
+# SET @last_id_in_movie = LAST_INSERT_ID();
+
+# INSERT INTO `movie_actor` (`movie_id`, `actor_id`)
+# VALUES (@last_id_in_movie, @last_id_in_actor)
+    # SET @last_id_in_movie = LAST_INSERT_ID();
+    # SET @last_id_in_actor = LAST_INSERT_ID();
+    
+    # INSERT INTO `movie_actor` (`movie_id`, `actor_id`)
+    # VALUES (@last_id_in_movie, @last_id_in_actor)
             
             
             

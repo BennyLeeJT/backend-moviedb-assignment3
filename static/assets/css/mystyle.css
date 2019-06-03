@@ -50,3 +50,16 @@ background: #EFD8FF;
 /*text-shadow: none;*/
 }
 
+
+#deletepage_div_row 
+{
+  display: flex;
+
+}
+
+#deletepage_div_column 
+{
+  /*flex: 50%;*/
+  min-width: 198.266px;  
+}
+

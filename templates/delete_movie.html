@@ -1,0 +1,149 @@
+{% extends "layout_index.html" %}
+
+{% block content %}
+	
+
+
+<div class="container">
+<h1>Confirm to Delete Movie ID {{ movie_fetchone_jinja.id }} ?</h1>
+
+    <div id="deletepage_div_row" class="container">
+        <div id="deletepage_div_column" >
+          Movie Title : &nbsp;
+        </div>
+
+        <div id="deletepage_div_column">
+          {{movie_fetchone_jinja.title}}
+        </div>
+    </div>
+    
+    
+    <div id="deletepage_div_row" class="container">
+        <div id="deletepage_div_column" >
+          Description info of movie : &nbsp;
+        </div>
+
+        <div id="deletepage_div_column">
+          {{movie_fetchone_jinja.info}}
+        </div>
+    </div>
+    
+    <div id="deletepage_div_row" class="container">
+        <div id="deletepage_div_column">
+          Censor Rating : &nbsp;
+        </div>
+
+        <div id="deletepage_div_column">
+          {{ movie_fetchone_jinja["censorrating.censorrating"] }}
+        </div>
+    </div>
+    
+    <div id="deletepage_div_row" class="container">
+        <div id="deletepage_div_column" >
+          Runtime (in mins) : &nbsp;
+        </div>
+
+        <div id="deletepage_div_column">
+          {{movie_fetchone_jinja.runtime}}
+        </div>
+    </div>
+    
+    <div id="deletepage_div_row" class="container">
+        <div id="deletepage_div_column" >
+          Review Rating : &nbsp;
+        </div>
+
+        <div id="deletepage_div_column">
+          {{movie_fetchone_jinja.reviewrating}}
+        </div>
+    </div>
+    
+    <div id="deletepage_div_row" class="container">
+        <div id="deletepage_div_column" >
+          Year of Release : &nbsp;
+        </div>
+
+        <div id="deletepage_div_column">
+          {{movie_fetchone_jinja.year}}
+        </div>
+    </div>
+    
+    <div id="deletepage_div_row" class="container">
+        <div id="deletepage_div_column" >
+          Genre : &nbsp;
+        </div>
+
+        <div id="deletepage_div_column">
+          {{ movie_fetchone_jinja.genre }}
+        </div>
+    </div>
+    
+    <div id="deletepage_div_row" class="container">
+        <div id="deletepage_div_column" >
+          Languages : &nbsp;
+        </div>
+
+        <div id="deletepage_div_column">
+          {{ movie_fetchone_jinja.language }}
+        </div>
+    </div>
+    
+    <div id="deletepage_div_row" class="container">
+        <div id="deletepage_div_column" >
+          Actors : &nbsp;
+        </div>
+
+        <div id="deletepage_div_column">
+          {{movie_fetchone_jinja.name}}
+        </div>
+    </div>
+    
+    <div id="deletepage_div_row" class="container">
+        <div id="deletepage_div_column" >
+          Character Roles : &nbsp;
+        </div>
+
+        <div id="deletepage_div_column">
+          {{movie_fetchone_jinja["character.name"]}}
+        </div>
+    </div>
+    
+    <div id="deletepage_div_row" class="container">
+        <div id="deletepage_div_column" >
+          Production Company : &nbsp;
+        </div>
+
+        <div id="deletepage_div_column">
+          {{movie_fetchone_jinja["productioncompany.name"]}}
+        </div>
+    </div>
+
+&#8203;
+<p></p>
+
+    <form method='POST'>
+        <input type='submit' value="Confirm Deletion">
+    </form>
+</div>
+
+&#8203;
+<p></p>
+
+<div class="container">
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <!--<ul class=flashes>-->
+    <div class=flashes>
+    {% for category, message in messages %}
+        {{ message }}
+      <!--<li>{{ message }}</li>-->
+     
+    {% endfor %}
+    </div>
+    <!--</ul>-->
+  {% endif %}
+{% endwith %}
+
+</div>
+
+{% endblock %}
