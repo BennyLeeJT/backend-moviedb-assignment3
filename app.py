@@ -5,9 +5,6 @@ from flask import redirect
 from flask import flash
 from flask import Markup
 
-import numpy
-from imdb import IMDb
-
 import pymysql
 import os
 app = Flask(__name__)
@@ -21,7 +18,7 @@ cursor = pymysql.cursors.DictCursor(connection123)
 
 app.secret_key = 'some_secret'
 
-
+# for nav bar search
 sql_query_all_tables_joined = """
         SELECT * 
         FROM movie
@@ -930,7 +927,7 @@ def delete_movie_including_search(id):
     
     
 
-
+# for using python to add the front (SELECT) and end (WHERE or GROUP BY)
 sql_all_movie_table_only = """
     FROM movie
     
