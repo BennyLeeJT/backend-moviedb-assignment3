@@ -56,6 +56,7 @@ sql_query_all_tables_joined = """
         `character`.name LIKE %s OR
         `productioncompany`.`name` LIKE %s OR
         `censorrating`.`censorrating` LIKE %s OR
+        `reviewrating`.`id` LIKE %s OR
         `year`.`id` LIKE %s
         """
         
@@ -76,10 +77,11 @@ def home():
         search_for = "%" + request.args['search_input_name'] + "%"
         print("ELSE CONDITION : search_for = ", search_for)
         
-        
+        sql_full = sql_query_all_tables_joined + search_for
+        print("sql_full = ", sql_full)
         
         # print("sql_query_all_tables_joined = ", sql_query_all_tables_joined)
-        cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
+        cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
         # print("cursor_executed = ", cursor_executed)
         movies_var = cursor.fetchall()
         print("movies_var = ", movies_var)
@@ -122,7 +124,7 @@ def addpage_including_search():
             print("ELSE CONDITION : search_for = ", search_for)
             
             # print("sql_query_all_tables_joined = ", sql_query_all_tables_joined)
-            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
+            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
             # print("cursor_executed = ", cursor_executed)
             movies_var = cursor.fetchall()
             print("movies_var = ", movies_var)
@@ -358,7 +360,7 @@ sql_all_movies_data = """
 
     """
 
-print("sql_all_movies_data", sql_all_movies_data)
+# print("sql_all_movies_data", sql_all_movies_data)
 
 @app.route('/database')
 def database_including_search():
@@ -378,7 +380,7 @@ def database_including_search():
 
         # print("sql_query_all_tables_joined = ", sql_query_all_tables_joined)
 
-        cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
+        cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
         # print("cursor_executed = ", cursor_executed)
         movies_var = cursor.fetchall()
         # print("movies_var = ", movies_var)
@@ -476,7 +478,7 @@ def edit_movie_including_search(id): # id here pass in from route parameter as a
             print("ELSE CONDITION : search_for = ", search_for)
             
             # print("sql_query_all_tables_joined = ", sql_query_all_tables_joined)
-            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
+            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
             # print("cursor_executed = ", cursor_executed)
             movies_var = cursor.fetchall()
             print("movies_var = ", movies_var)
@@ -819,7 +821,7 @@ def delete_movie_including_search(id):
             print("ELSE CONDITION : search_for = ", search_for)
             
             # print("sql_query_all_tables_joined = ", sql_query_all_tables_joined)
-            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
+            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
             # print("cursor_executed = ", cursor_executed)
             movies_var = cursor.fetchall()
             print("movies_var = ", movies_var)
@@ -980,7 +982,7 @@ def filterpage_genre_including_search():
             search_for = "%" + request.args['search_input_name'] + "%"
             print("ELSE CONDITION : search_for = ", search_for)
             
-            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
+            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
             # print("cursor_executed = ", cursor_executed)
             movies_var = cursor.fetchall()
             print("movies_var = ", movies_var)
@@ -1027,14 +1029,14 @@ def filterpage_genre_including_search():
         except:
             raise
         
-        return render_template('filter_results.html', 
+        return render_template('filter_grid.html', 
         all_movies_jinja = movies_var,
         all_movies_count_jinja = movies_count_var,
         genre_name_jinja = genre_name_var,
         genre_count_jinja = genre_count_var,
         )
         
-        
+        # 'filter_results.html', 
 
         
         
@@ -1061,7 +1063,7 @@ def filterpage_language_including_search():
             search_for = "%" + request.args['search_input_name'] + "%"
             print("ELSE CONDITION : search_for = ", search_for)
             
-            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
+            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
             # print("cursor_executed = ", cursor_executed)
             movies_var = cursor.fetchall()
             print("movies_var = ", movies_var)
@@ -1078,7 +1080,7 @@ def filterpage_language_including_search():
             sql_all_movies_data_count_group_by = "SELECT *, COUNT(`language`)" + sql_all_movie_table_only
             print("sql_all_movies_data_count_group_by = ", sql_all_movies_data_count_group_by)
             
-            sql_input = " ".join(["WHERE", "`language`", ".", "`id`", "=", language_var])
+            sql_input = " ".join(["WHERE", "`language`.`id`", "=", language_var])
             # this is same as # sql_input = "WHERE" + " " + "`language`" + " " + "." + "`id`" + "=" + language_var
             
             cursor.execute(sql_all_movies_data + sql_input)
@@ -1104,14 +1106,14 @@ def filterpage_language_including_search():
         except:
             raise
     
-        return render_template('filter_results.html', 
+        return render_template('filter_grid.html', 
         all_movies_jinja = movies_var,
         all_movies_count_jinja = movies_count_var,
         language_name_jinja = language_name_var,
         language_count_jinja = language_count_var,
         )
 
-
+        # filter_results.html
 
 
 @app.route('/filter_year')
@@ -1137,7 +1139,7 @@ def filterpage_year_including_search():
             search_for = "%" + request.args['search_input_name'] + "%"
             print("ELSE CONDITION : search_for = ", search_for)
             
-            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
+            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
             # print("cursor_executed = ", cursor_executed)
             movies_var = cursor.fetchall()
             print("movies_var = ", movies_var)
@@ -1155,7 +1157,7 @@ def filterpage_year_including_search():
             print("sql_all_movies_data_count_group_by = ", sql_all_movies_data_count_group_by)
   
   
-            sql_input = " ".join(["WHERE", "`year`", ".", "`id`", "=", year_var])
+            sql_input = " ".join(["WHERE", "`year`.`id`", "=", year_var])
 
             cursor.execute(sql_all_movies_data + sql_input)
             # print("cursor_executed = ", cursor_executed)
@@ -1181,18 +1183,13 @@ def filterpage_year_including_search():
         except:
             raise
         
-        return render_template('filter_results.html', 
+        return render_template('filter_grid.html', 
             all_movies_jinja = movies_var,
             year_name_jinja = year_name_var,
             year_count_jinja = year_count_var,
             )
-            
-        # try:
-            
-        # except IndexError:
-        #     print("why??")
 
-
+        # filter_results.html
 
 
 
@@ -1220,7 +1217,7 @@ def filterpage_censorrating_including_search():
             search_for = "%" + request.args['search_input_name'] + "%"
             print("ELSE CONDITION : search_for = ", search_for)
             
-            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
+            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
             # print("cursor_executed = ", cursor_executed)
             movies_var = cursor.fetchall()
             print("movies_var = ", movies_var)
@@ -1239,7 +1236,7 @@ def filterpage_censorrating_including_search():
             sql_all_movies_data_count_group_by = "SELECT *, COUNT(`censorrating`.`censorrating`)" + sql_all_movie_table_only
             print("sql_all_movies_data_count_group_by = ", sql_all_movies_data_count_group_by)
           
-            sql_input = " ".join(["WHERE", "`censorrating`", ".", "`id`", "=", censorrating_var])
+            sql_input = " ".join(["WHERE", "`censorrating`.`id`", "=", censorrating_var])
 
             cursor.execute(sql_all_movies_data + sql_input)
             # print("cursor_executed = ", cursor_executed)
@@ -1267,7 +1264,7 @@ def filterpage_censorrating_including_search():
         # except KeyError:
         #     censorrating_count_var = None
         try:
-            return render_template('filter_results.html', 
+            return render_template('filter_grid.html', 
             all_movies_jinja = movies_var,
             censorrating_name_jinja = censorrating_name_var,
             censorrating_count_jinja = censorrating_count_var,
@@ -1275,7 +1272,37 @@ def filterpage_censorrating_including_search():
         except:
             raise
         
+        # filter_results.html
 
+
+# sql_test = """
+# SELECT *, COUNT(`reviewrating`)
+
+# FROM movie
+    
+#     LEFT JOIN `movie_actor` ON `movie`.`id` = `movie_actor`.`movie_id`
+#     LEFT JOIN `actor` ON `actor`.`id` = `movie_actor`.`actor_id`
+    
+#     LEFT JOIN `movie_character` ON `movie`.`id` = `movie_character`.`movie_id` 
+#     LEFT JOIN `character` ON `character`.`id` = `movie_character`.`character_id`
+    
+#     LEFT JOIN `movie_genre` ON `movie`.`id` = `movie_genre`.`movie_id`
+#     LEFT JOIN `genre` ON `genre`.`id` = `movie_genre`.`genre_id`
+    
+#     LEFT JOIN `movie_language` ON `movie`.`id` = `movie_language`.`movie_id`
+#     LEFT JOIN `language` ON `language`.`id` = `movie_language`.`language_id`
+    
+#     LEFT JOIN `movie_productioncompany` ON `movie`.`id` = `movie_productioncompany`.`movie_id`
+#     LEFT JOIN `productioncompany` ON `productioncompany`.`id` = `movie_productioncompany`.`productioncompany_id`
+    
+#     LEFT JOIN `censorrating` ON `movie`.`censorrating` = `censorrating`.`id`
+    
+#     LEFT JOIN `reviewrating` ON `movie`.`reviewrating` = `reviewrating`.`id`
+
+#     LEFT JOIN `year` ON `movie`.`year` = `year`.`id`
+    
+#     WHERE reviewrating.id LIKE "%1.1%"
+# """
 
 
 @app.route('/filter_reviewrating')
@@ -1300,7 +1327,7 @@ def filterpage_reviewrating_including_search():
             search_for = "%" + request.args['search_input_name'] + "%"
             print("ELSE CONDITION : search_for = ", search_for)
             
-            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
+            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
             # print("cursor_executed = ", cursor_executed)
             movies_var = cursor.fetchall()
             print("movies_var = ", movies_var)
@@ -1314,17 +1341,23 @@ def filterpage_reviewrating_including_search():
         print("reviewrating_var = ", reviewrating_var)
 
         try:
-            sql_all_movies_data_count_group_by = "SELECT *, COUNT(reviewrating)" + sql_all_movie_table_only
+            sql_all_movies_data_count_group_by = "SELECT *, COUNT(`reviewrating`) " + sql_all_movie_table_only
             print("sql_all_movies_data_count_group_by = ", sql_all_movies_data_count_group_by)
-         
-            sql_input = " ".join(["WHERE", "`reviewrating`", ".", "`id`", "=", reviewrating_var])
-
+            
+            sql_input = "".join(["WHERE `reviewrating`.`id` LIKE ", reviewrating_var])
+            print("sql_input = ", sql_input)
+            
+            # sql_full = sql_all_movies_data_count_group_by + sql_input
+            # print("sql_full = ", sql_full)
+            
             cursor.execute(sql_all_movies_data + sql_input)
             # print("cursor_executed = ", cursor_executed)
             movies_var = cursor.fetchall()
             print("movies_var = ", movies_var)
             
             cursor.execute(sql_all_movies_data_count_group_by + " " + sql_input + " " + "GROUP BY `reviewrating`")
+            # cursor.execute(sql_test)
+
             # print("cursor_executed = ", cursor_executed)
             movies_count_var = cursor.fetchall()
             print("movies_count_var = ", movies_count_var)
@@ -1336,21 +1369,77 @@ def filterpage_reviewrating_including_search():
                 reviewrating_name_var = movies_count_var[0]["reviewrating"]
                 print("reviewrating_name_var = ", reviewrating_name_var)
                 
-                reviewrating_count_var = movies_count_var[0]["COUNT(reviewrating)"]
+                reviewrating_count_var = movies_count_var[0]["COUNT(`reviewrating`)"]
                 print("reviewrating_count_var = ", reviewrating_count_var)
             
         except:
             # print (cursor._last_executed)
             raise
     
-        return render_template('filter_results.html', 
+        return render_template('filter_grid.html', 
         all_movies_jinja = movies_var,
         reviewrating_name_jinja = reviewrating_name_var,
         reviewrating_count_jinja = reviewrating_count_var,
         )
         
+        # filter_results.html
+
+
+
+
+
+@app.route("/single_movie/<id>", methods=['GET'])
+def single_movie_including_search(id):
+    cursor.execute(sql_all_movies_data_withID + id) 
+    movie_fetchone_sql = cursor.fetchone()
+    print("movie_fetchone_sql = ", movie_fetchone_sql)
+    
+    if request.method == 'GET':
+        if 'search_input_name' not in request.args:
+            print("IF CONDITION")
+            print("id from route = ", id)
+            
+            cursor.execute('SELECT * from language')
+            language_var = cursor.fetchall()
+            # print("language_var = ", language_var)
+            
+            cursor.execute('SELECT * from genre')
+            genre_var = cursor.fetchall()
+            # print("genre_var = ", genre_var)
+            
+            cursor.execute("SELECT * from censorrating")
+            censorrating_var = cursor.fetchall()
+            # print("censorrating_var = ", censorrating_var)
+            
+            return render_template('single_movie.html', 
+            all_languages_jinja = language_var, 
+            all_genres_jinja = genre_var,
+            all_censorratings_jinja = censorrating_var,
+            movie_id_jinja = id,
+            movie_fetchone_jinja = movie_fetchone_sql,
+            )
         
         
+        else:
+            search_for = "%" + request.args['search_input_name'] + "%"
+            print("ELSE CONDITION : search_for = ", search_for)
+            
+            # print("sql_query_all_tables_joined = ", sql_query_all_tables_joined)
+            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
+            # print("cursor_executed = ", cursor_executed)
+            movies_var = cursor.fetchall()
+            print("movies_var = ", movies_var)
+            return render_template('search_results.html', 
+            all_movies_jinja = movies_var)
+            
+            
+            
+    else:
+ 
+        return redirect('/single_movie/%s' % id)
+        # return redirect("/delete_movie.html")
+
+
         
         
 if __name__ == "__main__":

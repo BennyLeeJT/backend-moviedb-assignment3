@@ -1,4 +1,4 @@
-h1, h2, h3, tbody, .container, form, .filter_results_p
+h1, h2, h3, tbody, .container, form
 {	color: white; }
 
 h1 {text-decoration: underline;}
@@ -63,4 +63,14 @@ background: #EFD8FF;
   display: inline-block;
   min-width: 198.266px;  
   color: white;
+}
+
+.card__content
+{
+  background-color: #282525;
+}
+
+.filter_results_p
+{
+  color : #ff55a5;
 }

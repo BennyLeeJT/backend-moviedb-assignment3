@@ -1,0 +1,125 @@
+{% extends "layout_index.html" %}
+
+{% block content %}
+	
+
+
+<div class="container">
+<h4> <em>(click "Back" on your browser to choose another option, or click "Filter By" to change selection)</em> </h4>
+
+<h1>Details of Movie ID {{ movie_fetchone_jinja.id }}</h1>
+
+    <div class="container deletepage_div_row">
+        <div class="deletepage_div_column" >
+          Movie Title : &nbsp;
+        </div>
+
+        <div class="deletepage_div_column">
+          {{movie_fetchone_jinja.title}}
+        </div>
+    </div>
+    
+    
+    <div class="container deletepage_div_row">
+        <div class="deletepage_div_column" >
+          Description info of movie : &nbsp;
+        </div>
+
+        <div class="deletepage_div_column">
+          {{movie_fetchone_jinja.info}}
+        </div>
+    </div>
+    
+    <div class="container deletepage_div_row">
+        <div class="deletepage_div_column">
+          Censor Rating : &nbsp;
+        </div>
+
+        <div class="deletepage_div_column">
+          {{ movie_fetchone_jinja["censorrating.censorrating"] }}
+        </div>
+    </div>
+    
+    <div class="container deletepage_div_row">
+        <div class="deletepage_div_column" >
+          Runtime (in mins) : &nbsp;
+        </div>
+
+        <div class="deletepage_div_column">
+          {{movie_fetchone_jinja.runtime}}
+        </div>
+    </div>
+    
+    <div class="container deletepage_div_row">
+        <div class="deletepage_div_column" >
+          Review Rating : &nbsp;
+        </div>
+
+        <div class="deletepage_div_column">
+          {{movie_fetchone_jinja.reviewrating}}
+        </div>
+    </div>
+    
+    <div class="container deletepage_div_row">
+        <div class="deletepage_div_column" >
+          Year of Release : &nbsp;
+        </div>
+
+        <div class="deletepage_div_column">
+          {{movie_fetchone_jinja.year}}
+        </div>
+    </div>
+    
+    <div class="container deletepage_div_row">
+        <div class="deletepage_div_column" >
+          Genre : &nbsp;
+        </div>
+
+        <div class="deletepage_div_column">
+          {{ movie_fetchone_jinja.genre }}
+        </div>
+    </div>
+    
+    <div class="container deletepage_div_row">
+        <div class="deletepage_div_column" >
+          Languages : &nbsp;
+        </div>
+
+        <div class="deletepage_div_column">
+          {{ movie_fetchone_jinja.language }}
+        </div>
+    </div>
+    
+    <div class="container deletepage_div_row">
+        <div class="deletepage_div_column" >
+          Actors : &nbsp;
+        </div>
+
+        <div class="deletepage_div_column">
+          {{movie_fetchone_jinja.name}}
+        </div>
+    </div>
+    
+    <div class="container deletepage_div_row">
+        <div class="deletepage_div_column" >
+          Character Roles : &nbsp;
+        </div>
+
+        <div class="deletepage_div_column">
+          {{movie_fetchone_jinja["character.name"]}}
+        </div>
+    </div>
+    
+    <div class="container deletepage_div_row">
+        <div class="deletepage_div_column" >
+          Production Company : &nbsp;
+        </div>
+
+        <div class="deletepage_div_column">
+          {{movie_fetchone_jinja["productioncompany.name"]}}
+        </div>
+    </div>
+
+
+
+{% endblock %}
