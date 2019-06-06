@@ -122,23 +122,10 @@
 								<!--</li>-->
 								<!-- end dropdown -->
 
-								<!-- dropdown -->
-								<!--<li class="header__nav-item">-->
-								<!--	<a class="dropdown-toggle header__nav-link" href="#" role="button" id="dropdownMenuCatalog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catalog</a>-->
-
-								<!--	<ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuCatalog">-->
-								<!--		<li><a href="catalog1.html">Catalog Grid</a></li>-->
-								<!--		<li><a href="catalog2.html">Catalog List</a></li>-->
-								<!--		<li><a href="details1.html">Details Movie</a></li>-->
-								<!--		<li><a href="details2.html">Details TV Series</a></li>-->
-								<!--	</ul>-->
-								<!--</li>-->
-								<!-- end dropdown -->
-								
 								<li class="header__nav-item">
 									<a href="http://backend-assignment3-roczi.c9users.io:8080/" class="header__nav-link">Home</a>
 								</li>
-								
+
 								<li class="header__nav-item">
 									<a href="http://backend-assignment3-roczi.c9users.io:8080/add" class="header__nav-link">Add Movie</a>
 								</li>
@@ -146,7 +133,25 @@
 								<li class="header__nav-item">
 									<a href="http://backend-assignment3-roczi.c9users.io:8080/database" class="header__nav-link">Full Database</a>
 								</li>
+								
+								<!--<li class="header__nav-item">-->
+								<!--	<a href="http://backend-assignment3-roczi.c9users.io:8080/filter" class="header__nav-link">Filter</a>-->
+								<!--</li>-->
 
+								<!-- dropdown -->
+								<li class="header__nav-item">
+									<a class="dropdown-toggle header__nav-link" href="#" role="button" id="dropdownMenuCatalog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Click to Filter By</a>
+
+									<ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuCatalog" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 90px, 0px);">
+										<li><a href="filter_genre">Genre</a></li>
+										<li><a href="filter_language">Language</a></li>
+										<li><a href="filter_year">Year of Release</a></li>
+										<li><a href="filter_censorrating">Censor Rating</a></li>
+										<li><a href="filter_reviewrating">Review Rating</a></li>
+									</ul>
+								</li>
+								<!-- end dropdown -->
+								
 								<!-- dropdown -->
 								<!--<li class="dropdown header__nav-item">-->
 								<!--	<a class="dropdown-toggle header__nav-link header__nav-link--more" href="#" role="button" id="dropdownMenuMore" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon ion-ios-more"></i></a>-->
@@ -168,7 +173,7 @@
 									<i class="icon ion-ios-search"></i>
 								</button>
 
-								<a href="signin.html" class="header__sign-in">
+								<a href="#" class="header__sign-in">
 									<i class="icon ion-ios-log-in"></i>
 									<span>sign in</span>
 								</a>
@@ -196,7 +201,7 @@
 						<div class="header__search-content">
 							<input type="text" placeholder="Enter ONLY 1 keyword to search for what you are looking for" name="search_input_name">
 
-							<button type="submit">search</button>
+							<button type="submit" name="submit_name" value="search_submit_value">search</button>
 						</div>
 					</div>
 				</div>
@@ -267,7 +272,7 @@
 					<h6 class="footer__title">Contact</h6>
 					<ul class="footer__list">
 						<li><a href="tel:+18002345678">+1 (800) 234-5678</a></li>
-						<li><a href="mailto:support@moviego.com">support@flixgo.com</a></li>
+						<li><a href="mailto:support@moviego.com">support@CinemaTronix.com</a></li>
 					</ul>
 					<ul class="footer__social">
 						<li class="facebook"><a href="#"><i class="icon ion-logo-facebook"></i></a></li>
@@ -281,7 +286,7 @@
 				<!-- footer copyright -->
 				<div class="col-12">
 					<div class="footer__copyright">
-						<small><a href="https://templatespoint.net" target="_blank">TemplatesPoint</a></small>
+						<small><a href="https://templatespoint.net" target="_blank">CinemaTronix</a></small>
 
 						<ul>
 							<li><a href="#">Terms of Use</a></li>
@@ -310,7 +315,8 @@
 	<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
 		    <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.4.1.js"></script>-->
+    <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 

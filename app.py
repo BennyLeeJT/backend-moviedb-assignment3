@@ -321,7 +321,7 @@ def addpage_including_search():
         
         connection123.commit()
         
-        flash("Your Movie has been entered successfully! Thank you for populating CinemaTronix Database for the greater good! \U0001F44D ", "info")
+        flash("Your Movie details have been entered successfully! Thank you for populating CinemaTronix Database for the greater good! \U0001F44D ", "info")
 
         # THIS SHOULD NOT BE AT THE LAST PART OF THE FUNCTION else unreacheable code
         return redirect('/add')
@@ -357,7 +357,9 @@ sql_all_movies_data = """
     LEFT JOIN `year` ON `movie`.`year` = `year`.`id`
 
     """
-    
+
+print("sql_all_movies_data", sql_all_movies_data)
+
 @app.route('/database')
 def database_including_search():
     if 'search_input_name' not in request.args:
@@ -744,7 +746,7 @@ def edit_movie_including_search(id): # id here pass in from route parameter as a
         
         print("weak entity movie_productioncompany no need update. ids don't change")
         
-        flash_msg_edit_success = Markup("Your Movie has been altered successfully! To view the updated info, do a search or view from the full database.<br><br>Thank you for keeping CinemaTronix Database updated correctly (hopefully) for the good of moviebuff-kind! \U0001F44D ")
+        flash_msg_edit_success = Markup("The Movie information has been altered successfully! To view the updated info, do a search or view from the full database.<br><br>Thank you for keeping CinemaTronix Database updated correctly for the good of moviebuff-kind! \U0001F44D ")
         
         flash(flash_msg_edit_success, "info")
 
@@ -927,6 +929,430 @@ def delete_movie_including_search(id):
     
 
 
+sql_all_movie_table_only = """
+    FROM movie
+    
+    LEFT JOIN `movie_actor` ON `movie`.`id` = `movie_actor`.`movie_id`
+    LEFT JOIN `actor` ON `actor`.`id` = `movie_actor`.`actor_id`
+    
+    LEFT JOIN `movie_character` ON `movie`.`id` = `movie_character`.`movie_id` 
+    LEFT JOIN `character` ON `character`.`id` = `movie_character`.`character_id`
+    
+    LEFT JOIN `movie_genre` ON `movie`.`id` = `movie_genre`.`movie_id`
+    LEFT JOIN `genre` ON `genre`.`id` = `movie_genre`.`genre_id`
+    
+    LEFT JOIN `movie_language` ON `movie`.`id` = `movie_language`.`movie_id`
+    LEFT JOIN `language` ON `language`.`id` = `movie_language`.`language_id`
+    
+    LEFT JOIN `movie_productioncompany` ON `movie`.`id` = `movie_productioncompany`.`movie_id`
+    LEFT JOIN `productioncompany` ON `productioncompany`.`id` = `movie_productioncompany`.`productioncompany_id`
+    
+    LEFT JOIN `censorrating` ON `movie`.`censorrating` = `censorrating`.`id`
+    
+    LEFT JOIN `reviewrating` ON `movie`.`reviewrating` = `reviewrating`.`id`
+
+    LEFT JOIN `year` ON `movie`.`year` = `year`.`id`
+
+    """
+
+
+@app.route('/filter_genre')
+def filterpage_genre_including_search():
+    # default is not in url when page is accessed, so go into listing of options.
+    if 'input_name_genre' not in request.args:    
+        print("IF CONDITION filter genre submit option")
+
+        # this if is to list all the options available, else it search from search bar
+        if 'search_input_name' not in request.args:
+            print("IF CONDITION filter genre no search")
+
+            cursor.execute('SELECT * from genre')
+            genre_var = cursor.fetchall()
+            # print("genre_var = ", genre_var)
+            
+            return render_template('filter_genre.html', 
+            all_genres_jinja = genre_var,
+            )
+
+                    
+        else:
+            # SEARCH FUNCTION
+            search_for = "%" + request.args['search_input_name'] + "%"
+            print("ELSE CONDITION : search_for = ", search_for)
+            
+            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
+            # print("cursor_executed = ", cursor_executed)
+            movies_var = cursor.fetchall()
+            print("movies_var = ", movies_var)
+            return render_template('search_results.html', 
+            all_movies_jinja = movies_var,
+            )
+            
+        
+
+
+    else:
+        print("ELSE CONDITION : get request for filter genre")
+        print("request.form = ", request.form)
+
+        genre_var = request.args['input_name_genre']
+        print("genre_var = ", genre_var)
+
+        try:
+            sql_all_movies_data_count_group_by_genre = "SELECT *, COUNT(`genre`)" + sql_all_movie_table_only
+            print("sql_all_movies_data_count_group_by_genre = ", sql_all_movies_data_count_group_by_genre)
+                
+            sql_input = " ".join(["WHERE `genre`.`id` =", genre_var])
+
+            cursor.execute(sql_all_movies_data + sql_input)
+            # print("cursor_executed = ", cursor_executed)
+            movies_var = cursor.fetchall()
+            print("movies_var = ", movies_var)
+            
+            cursor.execute(sql_all_movies_data_count_group_by_genre + " " + sql_input + " " + "GROUP BY `genre`.`genre`")
+            # print("cursor_executed = ", cursor_executed)
+            movies_count_var = cursor.fetchall()
+            print("movies_count_var = ", movies_count_var)
+            
+            if not movies_count_var :
+                return render_template('no_results.html')
+            
+            else: 
+                genre_name_var = movies_count_var[0]["genre"]
+                print("genre_name_var = ", genre_name_var)
+                
+                genre_count_var = movies_count_var[0]["COUNT(`genre`)"]
+                print("genre_count_var = ", genre_count_var)
+            
+        except:
+            raise
+        
+        return render_template('filter_results.html', 
+        all_movies_jinja = movies_var,
+        all_movies_count_jinja = movies_count_var,
+        genre_name_jinja = genre_name_var,
+        genre_count_jinja = genre_count_var,
+        )
+        
+        
+
+        
+        
+        
+@app.route('/filter_language')
+def filterpage_language_including_search():
+    # default is not in url when page is accessed, so go into listing of options.
+    if 'input_name_language' not in request.args:    
+        print("IF CONDITION filter language submit option")
+
+        # this if is to list all the options available, else it search from search bar
+        if 'search_input_name' not in request.args:
+            print("IF CONDITION filter language no search")
+            cursor.execute('SELECT * from language')
+            language_var = cursor.fetchall()
+            # print("language_var = ", language_var)
+
+            return render_template('filter_language.html', 
+            all_languages_jinja = language_var, 
+            )
+                    
+        else:
+            # SEARCH FUNCTION
+            search_for = "%" + request.args['search_input_name'] + "%"
+            print("ELSE CONDITION : search_for = ", search_for)
+            
+            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
+            # print("cursor_executed = ", cursor_executed)
+            movies_var = cursor.fetchall()
+            print("movies_var = ", movies_var)
+            return render_template('search_results.html', 
+            all_movies_jinja = movies_var)
+        
+    else:
+        print("ELSE CONDITION : get request for filter language")
+        print("request.form = ", request.form)
+        language_var = request.args['input_name_language']
+        print("language_var = ", language_var)
+
+        try:
+            sql_all_movies_data_count_group_by = "SELECT *, COUNT(`language`)" + sql_all_movie_table_only
+            print("sql_all_movies_data_count_group_by = ", sql_all_movies_data_count_group_by)
+            
+            sql_input = " ".join(["WHERE", "`language`", ".", "`id`", "=", language_var])
+            # this is same as # sql_input = "WHERE" + " " + "`language`" + " " + "." + "`id`" + "=" + language_var
+            
+            cursor.execute(sql_all_movies_data + sql_input)
+            # print("cursor_executed = ", cursor_executed)
+            movies_var = cursor.fetchall()
+            print("movies_var = ", movies_var)
+            
+            cursor.execute(sql_all_movies_data_count_group_by + " " + sql_input + " " + "GROUP BY `language`.`language`")
+            # print("cursor_executed = ", cursor_executed)
+            movies_count_var = cursor.fetchall()
+            print("movies_count_var = ", movies_count_var)
+            
+            if not movies_count_var :
+                return render_template('no_results.html')
+            
+            else: 
+                language_name_var = movies_count_var[0]["language"]
+                print("language_name_var = ", language_name_var)
+                
+                language_count_var = movies_count_var[0]["COUNT(`language`)"]
+                print("language_count_var = ", language_count_var)
+            
+        except:
+            raise
+    
+        return render_template('filter_results.html', 
+        all_movies_jinja = movies_var,
+        all_movies_count_jinja = movies_count_var,
+        language_name_jinja = language_name_var,
+        language_count_jinja = language_count_var,
+        )
+
+
+
+
+@app.route('/filter_year')
+def filterpage_year_including_search():
+    # default is not in url when page is accessed, so go into listing of options.
+    if 'input_name_year' not in request.args:    
+        print("IF CONDITION filter year submit option")
+
+        # this if is to list all the options available, else it search from search bar
+        if 'search_input_name' not in request.args:
+            print("IF CONDITION filter year no search")
+
+            cursor.execute('SELECT * from year')
+            year_var = cursor.fetchall()
+            # print("year_var = ", year_var)
+            
+            return render_template('filter_year.html', 
+            all_years_jinja = year_var,
+            )
+                    
+        else:
+            # SEARCH FUNCTION
+            search_for = "%" + request.args['search_input_name'] + "%"
+            print("ELSE CONDITION : search_for = ", search_for)
+            
+            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
+            # print("cursor_executed = ", cursor_executed)
+            movies_var = cursor.fetchall()
+            print("movies_var = ", movies_var)
+            return render_template('search_results.html', 
+            all_movies_jinja = movies_var)
+
+    else:
+        print("ELSE CONDITION : get request for filter year")
+        print("request.form = ", request.form)
+        year_var = request.args['input_name_year']
+        print("year_var = ", year_var)
+
+        try:
+            sql_all_movies_data_count_group_by = "SELECT *, COUNT(`year`)" + sql_all_movie_table_only
+            print("sql_all_movies_data_count_group_by = ", sql_all_movies_data_count_group_by)
+  
+  
+            sql_input = " ".join(["WHERE", "`year`", ".", "`id`", "=", year_var])
+
+            cursor.execute(sql_all_movies_data + sql_input)
+            # print("cursor_executed = ", cursor_executed)
+            movies_var = cursor.fetchall()
+            print("movies_var = ", movies_var)
+            
+            cursor.execute(sql_all_movies_data_count_group_by + " " + sql_input + " " + "GROUP BY `year`.`id`")
+            # print("cursor_executed = ", cursor_executed)
+            movies_count_var = cursor.fetchall()
+            print("movies_count_var = ", movies_count_var)
+            
+            if not movies_count_var :
+                return render_template('no_results.html')
+            
+            else: 
+                year_name_var = movies_count_var[0]["year"]
+                print("year_name_var = ", year_name_var)
+                
+                year_count_var = movies_count_var[0]["COUNT(`year`)"]
+                print("year_count_var = ", year_count_var)
+                
+        
+        except:
+            raise
+        
+        return render_template('filter_results.html', 
+            all_movies_jinja = movies_var,
+            year_name_jinja = year_name_var,
+            year_count_jinja = year_count_var,
+            )
+            
+        # try:
+            
+        # except IndexError:
+        #     print("why??")
+
+
+
+
+
+
+
+@app.route('/filter_censorrating')
+def filterpage_censorrating_including_search():
+    # default is not in url when page is accessed, so go into listing of options.
+    if 'input_name_censorrating' not in request.args:    
+        print("IF CONDITION filter censorrating submit option")
+
+        # this if is to list all the options available, else it search from search bar
+        if 'search_input_name' not in request.args:
+            print("IF CONDITION filter censorrating no search")
+            cursor.execute('SELECT * from censorrating')
+            censorrating_var = cursor.fetchall()
+            # print("censorrating_var = ", censorrating_var)
+
+            return render_template('filter_censorrating.html', 
+            all_censorratings_jinja = censorrating_var,
+            )
+                    
+        else:
+            # SEARCH FUNCTION
+            search_for = "%" + request.args['search_input_name'] + "%"
+            print("ELSE CONDITION : search_for = ", search_for)
+            
+            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
+            # print("cursor_executed = ", cursor_executed)
+            movies_var = cursor.fetchall()
+            print("movies_var = ", movies_var)
+            return render_template('search_results.html', 
+            all_movies_jinja = movies_var)
+            
+        
+
+
+    else:
+        print("ELSE CONDITION : get request for filter year")
+        print("request.form = ", request.form)
+        censorrating_var = request.args['input_name_censorrating']
+
+        try:
+            sql_all_movies_data_count_group_by = "SELECT *, COUNT(`censorrating`.`censorrating`)" + sql_all_movie_table_only
+            print("sql_all_movies_data_count_group_by = ", sql_all_movies_data_count_group_by)
+          
+            sql_input = " ".join(["WHERE", "`censorrating`", ".", "`id`", "=", censorrating_var])
+
+            cursor.execute(sql_all_movies_data + sql_input)
+            # print("cursor_executed = ", cursor_executed)
+            movies_var = cursor.fetchall()
+            print("movies_var = ", movies_var)
+            
+            cursor.execute(sql_all_movies_data_count_group_by + " " + sql_input + " " + "GROUP BY `censorrating`.`censorrating`")
+            # print("cursor_executed = ", cursor_executed)
+            movies_count_var = cursor.fetchall()
+            print("movies_count_var = ", movies_count_var)
+            
+            if not movies_count_var :
+                return render_template('no_results.html')
+            
+            else: 
+                censorrating_name_var = movies_count_var[0]["censorrating.censorrating"]
+                print("censorrating_name_var = ", censorrating_name_var)
+                
+                censorrating_count_var = movies_count_var[0]["COUNT(`censorrating`.`censorrating`)"]
+                print("censorrating_count_var = ", censorrating_count_var)
+        
+        except:
+            raise
+            
+        # except KeyError:
+        #     censorrating_count_var = None
+        try:
+            return render_template('filter_results.html', 
+            all_movies_jinja = movies_var,
+            censorrating_name_jinja = censorrating_name_var,
+            censorrating_count_jinja = censorrating_count_var,
+            )
+        except:
+            raise
+        
+
+
+
+@app.route('/filter_reviewrating')
+def filterpage_reviewrating_including_search():
+    # default is not in url when page is accessed, so go into listing of options.
+    if 'input_name_reviewrating' not in request.args:    
+        print("IF CONDITION filter reviewrating submit option")
+
+        # this if is to list all the options available, else it search from search bar
+        if 'search_input_name' not in request.args:
+            print("IF CONDITION filter reviewrating no search")
+            cursor.execute('SELECT * from reviewrating')
+            reviewrating_var = cursor.fetchall()
+            # print("reviewrating_var = ", reviewrating_var)
+            
+            return render_template('filter_reviewrating.html', 
+            all_reviewratings_jinja = reviewrating_var,
+            )
+      
+        else:
+            # SEARCH FUNCTION
+            search_for = "%" + request.args['search_input_name'] + "%"
+            print("ELSE CONDITION : search_for = ", search_for)
+            
+            cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
+            # print("cursor_executed = ", cursor_executed)
+            movies_var = cursor.fetchall()
+            print("movies_var = ", movies_var)
+            return render_template('search_results.html', 
+            all_movies_jinja = movies_var)
+
+    else:
+        print("ELSE CONDITION : get request for filter reviewrating")
+        print("request.form = ", request.form)
+        reviewrating_var = request.args['input_name_reviewrating']
+        print("reviewrating_var = ", reviewrating_var)
+
+        try:
+            sql_all_movies_data_count_group_by = "SELECT *, COUNT(reviewrating)" + sql_all_movie_table_only
+            print("sql_all_movies_data_count_group_by = ", sql_all_movies_data_count_group_by)
+         
+            sql_input = " ".join(["WHERE", "`reviewrating`", ".", "`id`", "=", reviewrating_var])
+
+            cursor.execute(sql_all_movies_data + sql_input)
+            # print("cursor_executed = ", cursor_executed)
+            movies_var = cursor.fetchall()
+            print("movies_var = ", movies_var)
+            
+            cursor.execute(sql_all_movies_data_count_group_by + " " + sql_input + " " + "GROUP BY `reviewrating`")
+            # print("cursor_executed = ", cursor_executed)
+            movies_count_var = cursor.fetchall()
+            print("movies_count_var = ", movies_count_var)
+            
+            if not movies_count_var :
+                return render_template('no_results.html')
+            
+            else: 
+                reviewrating_name_var = movies_count_var[0]["reviewrating"]
+                print("reviewrating_name_var = ", reviewrating_name_var)
+                
+                reviewrating_count_var = movies_count_var[0]["COUNT(reviewrating)"]
+                print("reviewrating_count_var = ", reviewrating_count_var)
+            
+        except:
+            # print (cursor._last_executed)
+            raise
+    
+        return render_template('filter_results.html', 
+        all_movies_jinja = movies_var,
+        reviewrating_name_jinja = reviewrating_name_var,
+        reviewrating_count_jinja = reviewrating_count_var,
+        )
+        
+        
+        
+        
+        
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),

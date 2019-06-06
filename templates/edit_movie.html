@@ -10,42 +10,66 @@
 <p><em>* compulsory fields</em></p>
     <form method='POST'>
         <div class="formtext">
-            <label>Movie Title* : </label>
-            <input type='text' name='input_name_title' value='{{movie_fetchone_jinja.title}}' required></input>
+            <div class="deletepage_div_column" >
+                <label>Movie Title* : </label>
+            </div>
+            <div class="deletepage_div_column" >
+                <input type='text' name='input_name_title' value='{{movie_fetchone_jinja.title}}' required></input>
+            </div>
         </div>
         
         <div class="formtext">
-            <label>Description info of movie : </label>
-            <textarea name='input_name_info'  rows="8" cols="50">{{movie_fetchone_jinja.info}}</textarea>
+            <div class="deletepage_div_column" >
+                <label>Description info of movie : </label>
+            </div>
+            <div class="deletepage_div_column" >
+                <textarea name='input_name_info'  rows="8" cols="50">{{movie_fetchone_jinja.info}}</textarea>
+            </div>
         </div>
         <!--CHECK : movie_fetchone_jinja["censorrating.id"] = {{ movie_fetchone_jinja["censorrating.id"] }} ------------ -->
         <!--movie_fetchone_jinja["censorrating.censorrating"] = {{ movie_fetchone_jinja["censorrating.censorrating"] }}-->
         <div class="formtext">
-            <label>Censor Rating* : </label>
-            <select name='input_name_censorrating' required>
-                {% for i in all_censorratings_jinja %}
-                    {% if i.censorrating == movie_fetchone_jinja["censorrating.censorrating"] %}
-                        <option value="{{ movie_fetchone_jinja["censorrating.id"] }}" selected='selected'>{{ movie_fetchone_jinja["censorrating.censorrating"] }}</option>
-                    {% else %}
-                        <option value="{{ i.id }}" >{{ i.censorrating }}</option>
-                    {% endif %}
-                {% endfor %}
-            </select>
+            <div class="deletepage_div_column" >
+                <label>Censor Rating* : </label>
+            </div>
+            <div class="deletepage_div_column" >
+                <select name='input_name_censorrating' required>
+                    {% for i in all_censorratings_jinja %}
+                        {% if i.censorrating == movie_fetchone_jinja["censorrating.censorrating"] %}
+                            <option value="{{ movie_fetchone_jinja["censorrating.id"] }}" selected='selected'>{{ movie_fetchone_jinja["censorrating.censorrating"] }}</option>
+                        {% else %}
+                            <option value="{{ i.id }}" >{{ i.censorrating }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
         </div>
 
         <div class="formtext">
-            <label>Runtime (in mins)* : </label>
-            <input type='number' name='input_name_runtime' min="0" value='{{movie_fetchone_jinja.runtime}}' required></input>
+            <div class="deletepage_div_column" >
+                <label>Runtime (in mins)* : </label>
+            </div>
+            <div class="deletepage_div_column" >
+                <input type='number' name='input_name_runtime' min="0" value='{{movie_fetchone_jinja.runtime}}' required></input>
+            </div>
         </div>
         
         <div class="formtext">
-            <label>Review Rating* : </label>
-            <input type='number' name='input_name_reviewrating' step="0.1" min="0" max="10" value='{{movie_fetchone_jinja.reviewrating}}' required></input>
+            <div class="deletepage_div_column" >
+                <label>Review Rating* : </label>
+            </div>
+            <div class="deletepage_div_column" >
+                <input type='number' name='input_name_reviewrating' step="0.1" min="0" max="10" value='{{movie_fetchone_jinja.reviewrating}}' required></input>
+            </div>
         </div>
         
         <div class="formtext">
-            <label>Year of Release* : </label>
-            <input type='number' name='input_name_year' min="1800" max=2030 id="input_id_year" value='{{movie_fetchone_jinja.year}}' required></input>
+            <div class="deletepage_div_column" >
+                <label>Year of Release* : </label>
+            </div>
+            <div class="deletepage_div_column" >
+                <input type='number' name='input_name_year' min="1800" max=2030 id="input_id_year" value='{{movie_fetchone_jinja.year}}' required></input>
+            </div>
         </div>
         
 
@@ -53,44 +77,64 @@
 
 
         <div class="formtext">
-            <label>Genre* : </label>
-            <select name='input_name_genre' required>
-                {% for i in all_genres_jinja %}
-                    {% if i.genre == movie_fetchone_jinja.genre %}
-                        <option value="{{ movie_fetchone_jinja["genre.id"] }}" selected='selected'>{{ movie_fetchone_jinja.genre }}</option>
-                    {% else %}
-                        <option value='{{i.id}}'>{{i.genre}}</option>
-                    {% endif %}
-                {% endfor %}
-            </select>
+            <div class="deletepage_div_column" >
+                <label>Genre* : </label>
+            </div>
+            <div class="deletepage_div_column" >
+                <select name='input_name_genre' required>
+                    {% for i in all_genres_jinja %}
+                        {% if i.genre == movie_fetchone_jinja.genre %}
+                            <option value="{{ movie_fetchone_jinja["genre.id"] }}" selected='selected'>{{ movie_fetchone_jinja.genre }}</option>
+                        {% else %}
+                            <option value='{{i.id}}'>{{i.genre}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
         </div>
 
         <div class="formtext">
-            <label>Languages* : </label>
-            <select name='input_name_language' required>
-                {% for i in all_languages_jinja %}
-                    {% if i.language == movie_fetchone_jinja.language %}
-                        <option value="{{ movie_fetchone_jinja["language.id"] }}" selected='selected'>{{ movie_fetchone_jinja.language }}</option>
-                    {% else %}    
-                        <option value='{{i.id}}'>{{i.language}}</option>
-                    {% endif %}
-                {% endfor %}
-            </select>
+            <div class="deletepage_div_column" >
+                <label>Languages* : </label>
+            </div>
+            <div class="deletepage_div_column" >
+                <select name='input_name_language' required>
+                    {% for i in all_languages_jinja %}
+                        {% if i.language == movie_fetchone_jinja.language %}
+                            <option value="{{ movie_fetchone_jinja["language.id"] }}" selected='selected'>{{ movie_fetchone_jinja.language }}</option>
+                        {% else %}    
+                            <option value='{{i.id}}'>{{i.language}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
         </div>
 
         <div class="formtext">
-            <label>Actors* : </label>
-            <input type='text' name='input_name_actor' value='{{movie_fetchone_jinja.name}}' required></input>
+            <div class="deletepage_div_column" >
+                <label>Actors* : </label>
+            </div>
+            <div class="deletepage_div_column" >
+                <input type='text' name='input_name_actor' value='{{movie_fetchone_jinja.name}}' required></input>
+            </div>
         </div>
         
         <div class="formtext">
-            <label>Character Roles* : </label>
-            <input type='text' name='input_name_character' value='{{movie_fetchone_jinja["character.name"]}}' required></input>
+            <div class="deletepage_div_column" >
+                <label>Character Roles* : </label>
+            </div>
+            <div class="deletepage_div_column" >
+                <input type='text' name='input_name_character' value='{{movie_fetchone_jinja["character.name"]}}' required></input>
+            </div>
         </div>
         
         <div class="formtext">
-            <label>Production Company* : </label>
-            <input type='text' name='input_name_productioncompany' value='{{movie_fetchone_jinja["productioncompany.name"]}}' required></input>
+            <div class="deletepage_div_column" >
+                <label>Production Company* : </label>
+            </div>
+            <div class="deletepage_div_column" >
+                <input type='text' name='input_name_productioncompany' value='{{movie_fetchone_jinja["productioncompany.name"]}}' required></input>
+            </div>
         </div>
         
         

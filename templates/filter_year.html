@@ -1,0 +1,41 @@
+{% extends "layout_index.html" %}
+
+{% block content %}
+	
+
+
+<div class="container">
+<h1>FILTER MOVIES HERE</h1>
+    <div class="container">
+    	<h4>Choose an option</h4>
+        	 <form method='GET'>
+                <div class="formtext">
+                    <div class="deletepage_div_column" >
+                        <label>Year of Release : </label>
+                    </div>
+                    <div class="deletepage_div_column" >
+                        <select name='input_name_year' required>
+                            {% for i in all_years_jinja %}
+                                <option value='{{i.id}}'>{{i.id}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <input type='submit'>
+                    <!--<input type='submit' name="filter_input_name">-->
+                    <!--<input type='submit' name="filter_input_name" value="Submit">-->
+                    <!--<input type='submit' value="Submit">-->
+                    <!--<input type='submit' name='input_name_genre'>-->
+                </div>
+                <p></p>
+                
+                
+                
+
+            </form>   
+        </div>
+        
+   
+        
+</div>
+
+{% endblock %}

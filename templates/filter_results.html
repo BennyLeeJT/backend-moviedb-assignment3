@@ -1,0 +1,124 @@
+{% extends "layout_search_results.html" %}
+
+{% block content %}
+    <h1>Filter Results</h1>
+    <h4> <em>(click on each header to sort)</em> </h4>
+    <h4> <em>(click "back" on your browser to choose another option, or click filter to change selection)</em> </h4>
+    <p></p>
+        <p class="filter_results_p"> Total movies found for filter "
+            {{ genre_name_jinja }}
+            {{ language_name_jinja }}
+            {{ year_name_jinja }}
+            {{ censorrating_name_jinja }}
+            {{ reviewrating_name_jinja }}
+            " 
+            = 
+            
+            
+            {{ genre_count_jinja }}
+            {{ language_count_jinja }}
+            {{ year_count_jinja }}
+            {{ censorrating_count_jinja }}
+            {{ reviewrating_count_jinja }}
+        </p>
+    
+<!--class="headerSortUp headerSortDown" -->
+<!--class="table-sortable"-->
+<!--<div class="tableFixHead">-->
+    <table class="table sortable" id="tableFixHead">
+  <thead class="thead-dark">
+    <tr>
+      <!--class="sort-by"-->
+      <th class="th_sort" scope="col">#</th>
+      <th class="th_sort" scope="col">Movie Id</th>
+      <th class="th_sort" scope="col">Movie Title</th>
+      <th class="th_sort" scope="col">Genre Id</th>
+      <th class="th_sort" scope="col">Genre</th>
+      <th class="th_sort" scope="col">Year</th>
+      <th class="th_sort" scope="col">Review Rating</th>
+      <th class="th_sort" scope="col">Language</th>
+      <th class="th_sort" scope="col">Info</th>
+      <th class="th_sort" scope="col">Actor Id</th>
+      <th class="th_sort" scope="col">Actor Name</th>
+      <th class="th_sort" scope="col">Character Id</th>
+      <th class="th_sort" scope="col">Character Name</th>
+      <th class="th_sort" scope="col">Runtime</th>
+      <th class="th_sort" scope="col">Censor Rating</th>
+      <th class="th_sort" scope="col">Production Company Id</th>
+      <th class="th_sort" scope="col">Production Company</th>
+      <th scope="col">Edit Movie</th>
+      <th scope="col">Delete Movie</th>
+
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+    {% for i in all_movies_jinja %}
+      <th class="table-responsive" id="dtBasicExample" scope="row">{{ loop.index }}</th>
+      <td>{{ i.id }}</td>
+      <td>{{ i.title }}</td>
+      <td>{{ i["genre.id"] }}</td>
+      <td>{{ i.genre }}</td>
+      <td>{{ i.year }}</td>
+      <td>{{ i.reviewrating }}</td>
+      <td>{{ i.language }}</td>
+      <td>{{ i.info }}</td>
+      <td>{{ i["actor.id"] }}</td>
+      <td>{{ i.name }}</td>
+      <td>{{ i["character.id"] }}</td>
+      <td>{{ i["character.name"] }}</td>
+      <td>{{ i.runtime }}</td>
+      <td>{{ i["censorrating.censorrating"] }}</td>
+      <td>{{ i["productioncompany.id"] }}</td>
+      <td>{{ i["productioncompany.name"] }}</td>
+      <td><a href="/edit/{{ i.id }}" class="btn btn-outline-warning">Edit</a></td> <!--id here same as table column name-->
+      <td><a href="/delete/{{ i.id }}" class="btn btn-outline-danger">Delete</a></td> <!--id here same as table column name-->
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+<!--<table class='table'>-->
+<!--            <tr>-->
+<!--                <th>-->
+<!--                    Employee Number-->
+<!--                </th>-->
+<!--                <th>-->
+<!--                    First Name-->
+<!--                </th>-->
+<!--                <th>-->
+<!--                    Last Name-->
+<!--                </th>-->
+<!--                <th>-->
+<!--                    Email-->
+<!--                </th>-->
+<!--                <th>-->
+<!--                    Job Title-->
+<!--                </th>-->
+<!--            </tr>-->
+<!--            {% for e in movies_jinja %}-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    {{ e['id'] }}-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    {{ e['title'] }}-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    {{ e['year'] }}-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    {{ e['runtime'] }}-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    {{ e['censorrating'] }}-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            {% endfor %}-->
+<!--        </table>-->
+        
+        
+        
+<!--</div>-->
+
