@@ -776,7 +776,7 @@ def movies_admin():
     movies_var = cursor.fetchall()
     print("movies_var = ", movies_var)
     
-    return render_template("all_movies.html", all_movies_jinja = movies_var)
+    return render_template("all_movies_admin.html", all_movies_jinja = movies_var)
 
 
 
@@ -828,22 +828,22 @@ def delete_movie_including_search(id):
             
             
     else:
-        print("request.form = ", request.form)
+        # print("request.form = ", request.form)
         print("movie_fetchone_sql['actor.id'] = ", movie_fetchone_sql['actor.id'])
         print("movie_fetchone_sql['character.id'] = ",movie_fetchone_sql['character.id'])
         print("movie_fetchone_sql['productioncompany.id'] = ",movie_fetchone_sql['productioncompany.id'])
-        title_var = request.form['input_name_title']
-        runtime_var = request.form['input_name_runtime']
-        info_var = request.form['input_name_info']
-        year_var = request.form['input_name_year']
-        reviewrating_var = request.form['input_name_reviewrating']
-        censorrating_var = request.form['input_name_censorrating']
-        # print("censorrating_var = ", censorrating_var)
-        genre_var = request.form['input_name_genre']
-        language_var = request.form['input_name_language']
-        actor_var = request.form['input_name_actor']
-        character_var = request.form['input_name_character']
-        productioncompany_var = request.form['input_name_productioncompany']
+        # title_var = request.form['input_name_title']
+        # runtime_var = request.form['input_name_runtime']
+        # info_var = request.form['input_name_info']
+        # year_var = request.form['input_name_year']
+        # reviewrating_var = request.form['input_name_reviewrating']
+        # censorrating_var = request.form['input_name_censorrating']
+        # # print("censorrating_var = ", censorrating_var)
+        # genre_var = request.form['input_name_genre']
+        # language_var = request.form['input_name_language']
+        # actor_var = request.form['input_name_actor']
+        # character_var = request.form['input_name_character']
+        # productioncompany_var = request.form['input_name_productioncompany']
         
         
         # delete movie. will cascade to weak entities of movie relations with tables of
