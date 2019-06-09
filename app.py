@@ -34,7 +34,7 @@ sql_query_all_tables_joined = """
         
         LEFT JOIN `movie_actor` ON `movie`.`id` = `movie_actor`.`movie_id`
         LEFT JOIN `actor` ON `actor`.`id` = `movie_actor`.`actor_id`
-        i
+        
         LEFT JOIN `movie_character` ON `movie`.`id` = `movie_character`.`movie_id` 
         LEFT JOIN `character` ON `character`.`id` = `movie_character`.`character_id`
         
