@@ -9,11 +9,20 @@ import pymysql
 import os
 app = Flask(__name__)
 
-connection123 = pymysql.connect(host="localhost",
-                            user="roczi",
-                            password="",
-                            db=("moviesdb"))
-                            
+# previously on cloud9 phpmyadmin
+#Filter By function works here. uncomment to use this host and it will work
+# connection123 = pymysql.connect(host="localhost",
+#                             user="roczi",
+#                             password="",
+#                             db=("moviesdb"))
+
+# Filter By function doesn't work in this version of mysql / phpmyadmin
+connection123 = pymysql.connect(host="remotemysql.com",
+                            user="C2XkwvUzoQ",
+                            password="onNqcJT3Ar",
+                            db=("C2XkwvUzoQ"),
+                            port=3306)
+
 cursor = pymysql.cursors.DictCursor(connection123)
 
 app.secret_key = 'some_secret'
@@ -25,7 +34,7 @@ sql_query_all_tables_joined = """
         
         LEFT JOIN `movie_actor` ON `movie`.`id` = `movie_actor`.`movie_id`
         LEFT JOIN `actor` ON `actor`.`id` = `movie_actor`.`actor_id`
-        
+        i
         LEFT JOIN `movie_character` ON `movie`.`id` = `movie_character`.`movie_id` 
         LEFT JOIN `character` ON `character`.`id` = `movie_character`.`character_id`
         
@@ -1009,6 +1018,8 @@ def filterpage_genre_including_search():
             print("movies_var = ", movies_var)
             
             cursor.execute(sql_all_movies_data_count_group_by_genre + " " + sql_input + " " + "GROUP BY `genre`.`genre`")
+            # error occurred using GROUP BY after exporting from cloud9 phpmyadmin to remotesql.com
+            # cursor.execute(sql_all_movies_data_count_group_by_genre + " " + sql_input)
             # print("cursor_executed = ", cursor_executed)
             movies_count_var = cursor.fetchall()
             print("movies_count_var = ", movies_count_var)
@@ -1086,6 +1097,8 @@ def filterpage_language_including_search():
             print("movies_var = ", movies_var)
             
             cursor.execute(sql_all_movies_data_count_group_by + " " + sql_input + " " + "GROUP BY `language`.`language`")
+            # error occurred using GROUP BY after exporting from cloud9 phpmyadmin to remotesql.com
+            # cursor.execute(sql_all_movies_data_count_group_by + " " + sql_input)
             # print("cursor_executed = ", cursor_executed)
             movies_count_var = cursor.fetchall()
             print("movies_count_var = ", movies_count_var)
@@ -1162,6 +1175,8 @@ def filterpage_year_including_search():
             print("movies_var = ", movies_var)
             
             cursor.execute(sql_all_movies_data_count_group_by + " " + sql_input + " " + "GROUP BY `year`.`id`")
+            # error occurred using GROUP BY after exporting from cloud9 phpmyadmin to remotesql.com
+            # cursor.execute(sql_all_movies_data_count_group_by + " " + sql_input)
             # print("cursor_executed = ", cursor_executed)
             movies_count_var = cursor.fetchall()
             print("movies_count_var = ", movies_count_var)
@@ -1241,6 +1256,8 @@ def filterpage_censorrating_including_search():
             print("movies_var = ", movies_var)
             
             cursor.execute(sql_all_movies_data_count_group_by + " " + sql_input + " " + "GROUP BY `censorrating`.`censorrating`")
+            # error occurred using GROUP BY after exporting from cloud9 phpmyadmin to remotesql.com
+            # cursor.execute(sql_all_movies_data_count_group_by + " " + sql_input)
             # print("cursor_executed = ", cursor_executed)
             movies_count_var = cursor.fetchall()
             print("movies_count_var = ", movies_count_var)
@@ -1321,7 +1338,7 @@ def filterpage_reviewrating_including_search():
       
         else:
             # SEARCH FUNCTION
-            search_for = "%" + request.args['search_input_name'] + "%"
+            search_for = "%" + float(request.args['search_input_name']) + "%"  #if don't convert to float, whole numbers like 1.0, 8.0 and 10.0 cannot be filtered. sql query returns no results. think because it treat it as 1, 8 and 10 which is not what it is in the database
             print("ELSE CONDITION : search_for = ", search_for)
             
             cursor.execute(sql_query_all_tables_joined, (search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for, search_for))
@@ -1353,6 +1370,8 @@ def filterpage_reviewrating_including_search():
             print("movies_var = ", movies_var)
             
             cursor.execute(sql_all_movies_data_count_group_by + " " + sql_input + " " + "GROUP BY `reviewrating`")
+            # error occurred using GROUP BY after exporting from cloud9 phpmyadmin to remotesql.com
+            # cursor.execute(sql_all_movies_data_count_group_by + " " + sql_input)
             # cursor.execute(sql_test)
 
             # print("cursor_executed = ", cursor_executed)
