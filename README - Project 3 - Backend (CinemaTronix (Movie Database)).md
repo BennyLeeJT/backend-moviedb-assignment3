@@ -154,15 +154,17 @@ However, Bugs:
 
 
 ## Deployment
+- I follow the steps given by heroku website under deployment method "Heroku Git"
+    - downloaded and installed Heroku CLI on my computer
+    - created a new app in Heroku website named roczi-cinematronix1
+    - cloud9 terminal : git login
+    - cloud9 terminal : heroku git:remote -a roczi-cinematronix1
+    - cloud9 terminal : git add .
+    - cloud9 terminal : git commit with message
+    - cloud9 terminal : git push heroku master
+- then I re-run the app.py in cloud 9 and my app is able to be opened from heroku. The filter / sql group by bug still persists though
 
-This section should describe the process you went through to deploy the project to a hosting platform (e.g. GitHub Pages or Heroku).
-
-In particular, you should provide all details of the differences between the deployed version and the development version, if any, including:
-- Different values for environment variables (Heroku Config Vars)?
-- Different configuration files?
-- Separate git branch?
-
-In addition, if it is not obvious, you should also describe how to run your code locally.
+- github is kept updated too with latest push to origin master after pushing to heroku master
 
 
 ## Credits

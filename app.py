@@ -25,8 +25,6 @@ connection123 = pymysql.connect(host="remotemysql.com",
 
 cursor = pymysql.cursors.DictCursor(connection123)
 
-app.secret_key = 'some_secret'
-
 # for nav bar search
 sql_query_all_tables_joined = """
         SELECT * 
